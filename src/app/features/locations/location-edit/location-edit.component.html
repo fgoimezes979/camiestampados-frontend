@@ -1,0 +1,70 @@
+<div class="container mt-4" *ngIf="locationForm">
+  <h2>Editar ubicación</h2>
+
+  <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+    <!-- Código -->
+    <div class="form-group mb-3">
+      <label for="code">Código</label>
+      <input
+        type="text"
+        id="code"
+        class="form-control"
+        formControlName="code"
+      />
+    </div>
+
+    <!-- Nombre -->
+    <div class="form-group mb-3">
+      <label for="name">Nombre</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+      />
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group mb-3">
+      <label for="description">Descripción</label>
+      <textarea
+        id="description"
+        rows="3"
+        class="form-control"
+        formControlName="description"
+      ></textarea>
+    </div>
+
+    <!-- Ability -->
+    <div class="form-group mb-3">
+      <label for="ability">Capacidad</label>
+      <input
+        type="number"
+        id="ability"
+        class="form-control"
+        formControlName="ability"
+      />
+    </div>
+
+    <!-- Estado -->
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        id="is_active"
+        class="form-check-input"
+        formControlName="isactive"
+      />
+      <label class="form-check-label" for="isActive">
+        Activo
+      </label>
+    </div>
+
+    <!-- Botones -->
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+      {{ isLoading ? 'Guardando...' : 'Actualizar' }}
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="router.navigate(['/location'])">
+      Cancelar
+    </button>
+  </form>
+</div>

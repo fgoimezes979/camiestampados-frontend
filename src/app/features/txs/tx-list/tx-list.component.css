@@ -1,0 +1,43 @@
+.operation-list-container {
+  padding: 20px;
+}
+
+.btn-create {
+  background-color: #4caf50;
+  color: rgb(27, 51, 50);
+  padding: 8px 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-create:hover {
+  background-color: #45a049;
+}
+
+.operation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.operation-table th,
+.operation-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.operation-table th {
+  background-color: #564786;
+}
+
+.income {
+  color: green;
+  font-weight: bold;
+}
+
+.outcome {
+  color: red;
+  font-weight: bold;
+}

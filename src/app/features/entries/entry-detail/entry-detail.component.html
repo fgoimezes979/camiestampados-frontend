@@ -1,0 +1,63 @@
+<div class="container mt-4" *ngIf="!loading && entry">
+
+  <h2>📄 Factura #{{ entry.invoice_number }}</h2>
+
+  <p><strong>Fecha:</strong> {{ entry.date | date:'dd/MM/yyyy' }}</p>
+  <p><strong>Ubicación:</strong> {{ entry.location?.name }}</p>
+
+  <hr>
+
+  <h4>🛒 Productos Comprados</h4>
+
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio Unitario</th>
+        <th>Subtotal</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of entry.details">
+
+        <!-- Producto -->
+        <td>{{ item.product?.name }}</td>
+
+        <!-- Cantidad -->
+        <td>{{ item.quantity }}</td>
+
+        <!-- ✅ Precio real -->
+        <td>
+          {{ item.purchasePrice | currency:'COP':'symbol':'1.0-0' }}
+        </td>
+
+        <!-- ✅ Subtotal calculado -->
+        <td>
+          {{
+            (item.quantity * item.purchasePrice)
+            | currency:'COP':'symbol':'1.0-0'
+          }}
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Total -->
+  <h3 class="text-end mt-3">
+    ✅ Total:
+    {{ getTotal() | currency:'COP':'symbol':'1.0-0' }}
+  </h3>
+
+  <a routerLink="/entries" class="btn btn-secondary mt-3">
+    ⬅ Volver a Facturas
+  </a>
+
+</div>
+
+<!-- Loading -->
+<div *ngIf="loading" class="text-center mt-5">
+  <p>⏳ Cargando factura...</p>
+</div>

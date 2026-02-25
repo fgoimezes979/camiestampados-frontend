@@ -1,0 +1,112 @@
+
+   <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+
+ 
+  <!-- Content Header (Page header) -->
+  section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>editar proveedor</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <li class="breadcrumb-item active">editar</li>
+          </ol>
+        </div>
+      </div>
+    
+  </div><!-- /.container-fluid -->
+ <!-- Default box -->
+ <div class="card">
+  <div class="card-header">
+    <h3 class="card-title">listado de proveedores</h3>
+
+    <div class="card-tools">
+      <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+        <i class="fas fa-minus"></i>
+      </button>
+      <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+      <div>
+
+      <a [routerLink]="['/suppliers/create']" class="btn btn-success btn-sm"><i class="fas fa-plus"></i>agregar nuevo</a>
+     </div>
+<table class="table table-bordered table-striped table-sm">
+  <thead>
+    <tr>
+        <th style="width: 10%;" class="text-center">NIT</th>
+      <th style="width: 10%;" class="text-center">Nombre empresa</th>
+      <th style="width: 10%;" class="text-center">Tipo</th>
+      <th style="width: 10%;" class="text-center">direccion </th>
+       <th style="width: 10%;" class="text-center">telefono </th>
+       <th style="width: 10%;" class="text-center">correo </th>
+       <th style="width: 05%;" class="text-center">activo</th>
+      <th style="width: 25%;" class="text-center">ACCIÓN</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let supplier of suppliers">
+        <td class="text-center">{{ supplier.nit }}</td>
+      <td class="text-center">{{ supplier.name }}</td>
+      <td class="text-center">{{ supplier.type }}</td>
+      <td class="text-center">{{ supplier.direction }}</td>
+      <td class="text-center">{{ supplier.phone }}</td>
+      <td class="text-center">{{ supplier.email }}</td>
+      <td class="text-center">{{ supplier.isActive === true || supplier.isActive === 'true' ? 'Sí' : 'No' }}</td>
+
+      <td class="text-center">
+        <a [routerLink]="['/suppliers/show', supplier.id]" class="btn btn-info btn-sm mr-1">
+          <i class="fas fa-eye"></i> Mostrar
+        </a>
+        <a [routerLink]="['/suppliers/edit', supplier.id]" class="btn btn-warning btn-sm mr-1">
+          <i class="fas fa-edit"></i> Editar
+        </a>
+        <button class="btn btn-danger btn-sm" (click)="deleteSupplier(supplier.id)">
+          <i class="fas fa-trash"></i> Eliminar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+   
+
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer">
+    
+  </div>
+
+  <!-- /.card-footer-->
+   <div>
+    
+   </div>
+  
+</div>
+<!-- /.card -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+

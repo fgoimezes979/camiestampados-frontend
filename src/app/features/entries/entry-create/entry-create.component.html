@@ -1,0 +1,137 @@
+<form [formGroup]="entryForm"
+      (ngSubmit)="onSubmit()"
+      class="entry-form">
+
+  <!-- ENCABEZADO -->
+  <div class="form-row">
+
+    <div class="form-group">
+      <label>Proveedor</label>
+      <select formControlName="supplier_id">
+        <option value="">Seleccione</option>
+        <option *ngFor="let s of suppliers" [value]="s.id">
+          {{ s.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Factura</label>
+      <input type="text" formControlName="invoice_number">
+    </div>
+
+    <div class="form-group">
+      <label>Fecha</label>
+      <input type="date" formControlName="date">
+    </div>
+
+    <div class="form-group">
+      <label>Ubicación</label>
+      <select formControlName="location_id">
+        <option value="">Seleccione</option>
+        <option *ngFor="let loc of locations" [value]="loc.id">
+          {{ loc.name }}
+        </option>
+      </select>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <!-- DETALLE PRODUCTOS -->
+  <h3>Productos</h3>
+
+  <table class="products-table">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Precio Unit.</th>
+        <th>Subtotal</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody formArrayName="items">
+      <tr *ngFor="let item of items.controls; let i = index"
+          [formGroupName]="i">
+
+        <td>
+          <select formControlName="product_id"
+                  (change)="onProductSelect(i)">
+            <option value="">Seleccione</option>
+            <option *ngFor="let p of products" [value]="p.id">
+              {{ p.name }}
+            </option>
+          </select>
+        </td>
+
+        <td>
+          <input type="number"
+                 formControlName="quantity"
+                 min="1">
+        </td>
+
+        <td>
+          <input formControlName="code_product" readonly>
+        </td>
+
+        <td>
+          <input formControlName="product_name" readonly>
+        </td>
+
+        <td>
+          {{ item.get('unit_cost')?.value | currency }}
+        </td>
+
+        <td>
+          {{ getSubtotal(i) | currency }}
+        </td>
+
+        <td>
+          <button type="button"
+                  class="btn-remove"
+                  (click)="removeItem(i)"
+                  [disabled]="items.length === 1">
+            ❌
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button"
+          class="btn-add"
+          (click)="addItem()">
+    ➕ Agregar Producto
+  </button>
+
+  <hr>
+
+  <!-- TOTAL -->
+  <div class="total">
+    <strong>Total:</strong> {{ getTotal() | currency }}
+  </div>
+
+  <hr>
+
+  <!-- BOTONES -->
+  <div class="actions">
+    <button type="submit"
+            class="btn-save"
+            [disabled]="entryForm.invalid">
+      Guardar Entrada ✅
+    </button>
+
+    <button type="button"
+            class="btn-cancel"
+            (click)="onClose()">
+      Cancelar ❌
+    </button>
+  </div>
+
+</form>

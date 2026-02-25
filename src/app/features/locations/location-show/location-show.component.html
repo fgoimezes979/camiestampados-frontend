@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h2>👁️ Ver Ubicación</h2>
+
+  <div *ngIf="location; else loading">
+    
+    <!-- Código -->
+    <div class="mb-3" *ngIf="location.code">
+      <label class="form-label">Código:</label>
+      <p class="form-control-plaintext">{{ location.code }}</p>
+    </div>
+
+    
+
+    <!-- Botón volver -->
+    <div class="mt-4">
+      <button routerLink="/locations/list" class="btn btn-secondary">⬅ Volver</button>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <ng-template #loading>
+    <div class="alert alert-info">Cargando ubicación...</div>
+  </ng-template>
+</div>

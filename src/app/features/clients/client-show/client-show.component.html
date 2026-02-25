@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <h2>👁️ Ver Cliente</h2>
+
+  <div *ngIf="client; else loading">
+    <!-- Código -->
+    <div class="mb-3">
+      <label class="form-label">Código:</label>
+      <p class="form-control-plaintext">{{ client.code }}</p>
+    </div>
+
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label class="form-label">Nombre:</label>
+      <p class="form-control-plaintext">{{ client.name }}</p>
+    </div>
+
+    <!-- Apellido (si aplica) -->
+    <div class="mb-3" *ngIf="client.last_name">
+      <label class="form-label">Apellido:</label>
+      <p class="form-control-plaintext">{{ client.last_name }}</p>
+    </div>
+
+     <!-- Fecha de nacimiento -->
+    <div class="mb-3" *ngIf="client.birth">
+      <label class="form-label">Fecha de nacimiento:</label>
+      <p class="form-control-plaintext">{{ client.birth | date }}</p>
+    </div>
+
+     <!-- Sexo -->
+    <div class="mb-3" *ngIf="client.sex">
+      <label class="form-label">Sexo:</label>
+      <p class="form-control-plaintext">
+        {{ client.sex === 'M' ? 'Masculino' : client.sex === 'F' ? 'Femenino' : 'No especificado' }}
+      </p>
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-3" *ngIf="client.direction">
+      <label class="form-label">Dirección:</label>
+      <p class="form-control-plaintext">{{ client.direction }}</p>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-3" *ngIf="client.phone">
+      <label class="form-label">Teléfono:</label>
+      <p class="form-control-plaintext">{{ client.phone }}</p>
+    </div>
+
+    <!-- Correo -->
+    <div class="mb-3" *ngIf="client.email">
+      <label class="form-label">Correo electrónico:</label>
+      <p class="form-control-plaintext">{{ client.email }}</p>
+    </div>
+
+   
+    
+
+    
+
+   
+
+    <!-- Estado activo -->
+    <div class="mb-3">
+      <label class="form-label">¿Activo?</label>
+      <p class="form-control-plaintext">{{ client.isActive ? 'Sí' : 'No' }}</p>
+    </div>
+
+    
+
+    <!-- Botón volver -->
+    <div class="mt-4">
+      <button routerLink="/clients" class="btn btn-secondary">⬅ Volver</button>
+    </div>
+  </div>
+
+  <!-- Estado de carga -->
+  <ng-template #loading>
+    <div class="alert alert-info">Cargando cliente...</div>
+  </ng-template>
+</div>

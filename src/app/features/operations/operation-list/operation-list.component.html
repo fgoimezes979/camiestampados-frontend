@@ -1,0 +1,193 @@
+<div class="operation-list-container">
+  <h2>📊 Lista de Operaciones</h2>
+
+  <!-- Registrar saldo -->
+  <div class="saldo-actions mb-3">
+    <input
+      type="number"
+      [(ngModel)]="saldo"
+      placeholder="Ingresa saldo inicial"
+    />
+    <button class="btn btn-success" (click)="registrarSaldo()">
+      💾 Registrar Saldo
+    </button>
+  </div>
+
+  <!-- Saldo total -->
+  <div class="saldo-total mb-2">
+    <strong>Saldo total:</strong>
+    {{ saldoTotal | currency:'COP':'symbol':'1.0-0' }}
+  </div>
+
+  <!-- Tabla principal -->
+  <table class="operation-table">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th># Productos</th>
+        <th>Total</th>
+        <th>Ingresos</th>
+        <th>Egresos</th>
+        <th>Saldo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let op of operations">
+
+        <!-- ========================= -->
+        <!-- ✅ FILA PRINCIPAL -->
+        <!-- ========================= -->
+        <tr class="main-row" (click)="op.showDetails = !op.showDetails">
+
+          <!-- Fecha -->
+          <td>{{ op.date | date:'dd/MM/yyyy' }}</td>
+
+          <!-- Descripción con icono -->
+          <td>
+            <span *ngIf="op.type === 'ENTRY'">📥</span>
+            <span *ngIf="op.type === 'SALE'">📤</span>
+            <span *ngIf="op.type === 'TRANSFER'">🔄</span>
+            {{ op.description }}
+          </td>
+
+          <!-- Cantidad productos -->
+          <td>{{ op.details?.length }}</td>
+
+         <!-- Total -->
+<td>
+  <span *ngIf="op.type !== 'TRANSFER'">
+    {{
+      (op.details?.length ? op.total : op.amount)
+      | currency:'COP':'symbol':'1.0-0'
+    }}
+  </span>
+
+  <span *ngIf="op.type === 'TRANSFER'">—</span>
+</td>
+
+<!-- Ingresos -->
+<td class="text-success">
+  <span *ngIf="op.type === 'ENTRY'">
+    {{
+      (op.details?.length ? op.total : op.amount)
+      | currency:'COP':'symbol':'1.0-0'
+    }}
+  </span>
+
+  <span *ngIf="op.type === 'TRANSFER'">
+    Traslado
+  </span>
+
+  <span *ngIf="op.type === 'SALE'">—</span>
+</td>
+
+<!-- Egresos -->
+<td class="text-danger">
+  <span *ngIf="op.type === 'SALE'">
+    {{
+      (op.details?.length ? op.total : op.amount)
+      | currency:'COP':'symbol':'1.0-0'
+    }}
+  </span>
+
+  <span *ngIf="op.type === 'TRANSFER'">
+    Traslado
+  </span>
+
+  <span *ngIf="op.type === 'ENTRY'">—</span>
+</td>
+
+          <!-- Saldo -->
+          <td>
+            {{ op.balance | currency:'COP':'symbol':'1.0-0' }}
+          </td>
+
+          <!-- Acciones -->
+          <td>
+            <button
+              class="btn btn-danger btn-sm"
+              (click)="deleteOperation(op.id); $event.stopPropagation()"
+            >
+              🗑️ Eliminar
+            </button>
+          </td>
+        </tr>
+
+        <!-- ========================= -->
+        <!-- ✅ DETALLES (ACORDEÓN) -->
+        <!-- ========================= -->
+        <tr *ngIf="op.showDetails" class="details-row">
+          <td colspan="8">
+
+            <table class="table table-sm table-bordered mb-0">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let det of op.details ?? []">
+
+                  <!-- Producto -->
+                  <td>{{ det.productName }}</td>
+
+
+                  <!-- Cantidad -->
+                  <td>{{ det.quantity }}</td>
+
+                  <!-- Precio Unitario -->
+                  <td>
+                    <!-- ENTRY -->
+                    <span *ngIf="det.type === 'ENTRY'">
+                      {{ det.purchasePrice | currency:'COP':'symbol':'1.0-0' }}
+                    </span>
+
+                    <!-- SALE -->
+                    <span *ngIf="det.type === 'SALE'">
+                      {{ det.salePrice | currency:'COP':'symbol':'1.0-0' }}
+                    </span>
+
+                    <!-- TRANSFER -->
+                    <span *ngIf="det.type === 'TRANSFER'">
+                      —
+                    </span>
+                  </td>
+
+                  <!-- Subtotal -->
+                  <td>
+                    <!-- ENTRY o SALE -->
+                    <span *ngIf="det.type !== 'TRANSFER'">
+                      {{
+                        (det.quantity *
+                        (det.type === 'ENTRY'
+                          ? det.purchasePrice
+                          : det.salePrice))
+                        | currency:'COP':'symbol':'1.0-0'
+                      }}
+                    </span>
+
+                    <!-- TRANSFER -->
+                    <span *ngIf="det.type === 'TRANSFER'">
+                      —
+                    </span>
+                  </td>
+
+                </tr>
+              </tbody>
+            </table>
+
+          </td>
+        </tr>
+
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+

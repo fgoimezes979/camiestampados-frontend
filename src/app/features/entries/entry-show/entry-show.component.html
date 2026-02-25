@@ -1,0 +1,47 @@
+<div class="entry-show-container">
+  <h2>📄 Detalles de la Entrada</h2>
+
+  <!-- Información de la entrada -->
+  <div class="entry-details">
+    <div class="field">
+      <label>Código:</label>
+      <span>{{ entry?.code_product || 'N/A' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Producto:</label>
+      <span>{{ entry?.product || 'N/A' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Cantidad:</label>
+      <span>{{ entry?.quantity || 'N/A' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Fecha:</label>
+      <span>{{ entry?.date | date:'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Ubicación:</label>
+      <span>{{ entry?.locationName || 'N/A' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Usuario:</label>
+      <span>{{ entry?.user || 'N/A' }}</span>
+    </div>
+
+    <div class="field">
+      <label>Activo:</label>
+      <span>{{ entry?.is_active ? '✅' : '❌' }}</span>
+    </div>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="buttons">
+    <button class="btn-edit" (click)="onEdit()">✏️ Editar</button>
+    <button class="btn-cancel" (click)="onCancel()">❌ Cancelar</button>
+  </div>
+</div>

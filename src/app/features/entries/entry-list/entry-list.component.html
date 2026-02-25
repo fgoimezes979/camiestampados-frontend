@@ -1,0 +1,41 @@
+<div class="container mt-3">
+  <h3>📄 Lista de Facturas de Entrada</h3>
+
+  <button class="btn btn-primary mb-3" (click)="addEntry()">➕ Nueva Entrada</button>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Factura</th>
+        <th>Ubicación</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="entries.length === 0">
+        <td colspan="6" class="text-center">No hay entradas registradas.</td>
+      </tr>
+
+      <tr *ngFor="let entry of entries">
+        <td>{{ entry.id }}</td>
+        <td>{{ entry.invoice_number }}</td>
+        <td>{{ entry.location?.name || 'Sin ubicación' }}</td>
+        <td>{{ entry.date | date:'shortDate' }}</td>
+        <td>{{ entry.total | currency:'COP' }}</td>
+
+        <td>
+          <button class="btn btn-sm btn-info me-1" (click)="editEntry(entry.id)">✏️</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteEntry(entry.id)">❌</button>
+        </td>
+      </tr>
+    </tbody>
+    
+  </table>
+
+  <div *ngIf="loading" class="text-center mt-3">
+    <p>Cargando entradas...</p>
+  </div>
+</div>

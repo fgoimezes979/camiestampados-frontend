@@ -1,0 +1,24 @@
+<table *ngIf="entries.length > 0; else noData" class="table">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Descripción</th>
+      <th>Debe</th>
+      <th>Haber</th>
+      <th>Monto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of entries">
+      <td>{{ e.date | date: 'shortDate' }}</td>
+      <td>{{ e.description }}</td>
+      <td>{{ e.debitAccount }}</td>
+      <td>{{ e.creditAccount }}</td>
+      <td>{{ e.amount | number:'1.2-2' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noData>
+  <p class="text-muted">No hay asientos contables registrados.</p>
+</ng-template>

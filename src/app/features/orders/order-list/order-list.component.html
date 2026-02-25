@@ -1,0 +1,36 @@
+<div class="operation-list-container">
+  <h2>📊 Lista de Pedidos</h2>
+
+  <!-- Botón para crear nuevo pedido -->
+  <div class="actions">
+    <button routerLink="/orders/create" class="btn-new">
+      ➕ Nuevo Pedido
+    </button>
+  </div>
+
+  <table class="operation-table">
+    <thead>
+      <tr>
+        <th>Fecha de pedido</th>
+        <th>Estado</th>
+        <th>Fecha de entrega</th>
+        <th>Precio total</th>
+        <th>Cliente</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let op of orders">
+        <td>{{ op.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ op.estadoTraducido || 'N/A' }}</td>
+        <td>{{ op.due_date ? (op.due_date | date:'dd/MM/yyyy') : 'N/A' }}</td>
+        <td>{{ op.total_price | currency:'COP':'symbol':'1.0-0' }}</td>
+        <td>{{ op.cliente || 'N/A' }}</td>
+        <td>
+          <button class="btn-edit" (click)="editOrder(op.id)">✏️ Editar</button>
+          <button class="btn-delete" (click)="deleteOrder(op.id)">🗑️ Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

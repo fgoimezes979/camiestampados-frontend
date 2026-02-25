@@ -1,0 +1,115 @@
+<div class="container">
+  <h2>✏️ Editar Orden</h2>
+
+  <form [formGroup]="orderForm" (ngSubmit)="confirmOrder()" class="order-form">
+
+    <!-- Fecha -->
+    <div class="form-group">
+      <label for="date">📅 Fecha de pedido</label>
+      <input id="date" type="date" formControlName="date" />
+    </div>
+
+    <!-- Cliente -->
+    <div class="form-group">
+      <label for="client">👤 Cliente</label>
+      <select id="client" formControlName="client_id">
+        <option [ngValue]="null">-- Selecciona un cliente --</option>
+        <option *ngFor="let c of clients" [ngValue]="c.id">{{ c.name }}</option>
+      </select>
+    </div>
+
+    <!-- Fecha de entrega -->
+    <div class="form-group">
+      <label for="due_date">📅 Fecha de entrega</label>
+      <input id="due_date" type="date" formControlName="due_date" />
+    </div>
+
+    <!-- Estado -->
+    <div class="form-group">
+      <label for="state">📌 Estado de la orden</label>
+      <select id="state" formControlName="state">
+        <option value="PENDING">Pendiente</option>
+        <option value="IN_PROGRESS">En camino / En proceso</option>
+        <option value="DELIVERED">Despachado / Entregado</option>
+        <option value="CANCELLED">Cancelada</option>
+      </select>
+    </div>
+
+    <!-- Ubicación -->
+    <div class="form-group">
+      <label for="location">🏢 Ubicación</label>
+      <select id="location" formControlName="location_id">
+        <option [ngValue]="0">-- Selecciona una ubicación --</option>
+        <option *ngFor="let l of locations" [ngValue]="l.id">{{ l.name }}</option>
+      </select>
+    </div>
+
+    <!-- Producto -->
+    <div class="form-group">
+      <label for="product">📦 Producto</label>
+      <select id="product" formControlName="product_id">
+        <option [ngValue]="null">-- Selecciona un producto --</option>
+        <option *ngFor="let p of products" [ngValue]="p.id">
+          {{ p.code }} - {{ p.name }} - {{ p.sale_price | currency:'COP':'symbol' }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Cantidad -->
+    <div class="form-group">
+      <label for="quantity">🔢 Cantidad</label>
+      <input id="quantity" type="number" formControlName="quantity" min="1" />
+    </div>
+
+    <!-- Total -->
+    <div class="form-group total">
+      <label for="total">💵 Total de la orden</label>
+      <input id="total" type="text" [value]="getTotalOrder() | currency:'COP':'symbol'" readonly />
+    </div>
+
+    <!-- Botones -->
+    <div class="buttons">
+      <button type="button" (click)="addProduct()">➕ Agregar producto</button>
+      <button type="button" (click)="onClose()">❌ Cancelar</button>
+      <button type="submit" class="confirm-btn">💾 Actualizar Orden</button>
+    </div>
+  </form>
+
+  <!-- Tabla de productos agregados -->
+  <h3>🛒 Productos en la orden</h3>
+  <div class="table-container" *ngIf="selectedProducts.length > 0; else noProducts">
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>📦 Código</th>
+          <th>Producto</th>
+          <th>💰 Precio unitario</th>
+          <th>🔢 Cantidad</th>
+          <th>Estado</th>
+          <th>💵 Total</th>
+          <th>❌ Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of selectedProducts; let i = index">
+          <td>{{ p.product_code }}</td>
+          <td>{{ p.product_name }}</td>
+          <td>{{ p.unit_price | currency:'COP':'symbol' }}</td>
+          <td>{{ p.quantity }}</td>
+          <td>{{ orderForm.get('state')?.value || 'N/A' }}</td>
+          <td>{{ p.total_price | currency:'COP':'symbol' }}</td>
+          <td><button type="button" (click)="removeProduct(i)">🗑️</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Total general -->
+    <div class="total-container">
+      <h4>Total general: {{ getTotalOrder() | currency:'COP':'symbol' }}</h4>
+    </div>
+  </div>
+
+  <ng-template #noProducts>
+    <p class="empty">⚠️ Esta orden no tiene productos aún.</p>
+  </ng-template>
+</div>

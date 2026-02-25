@@ -1,0 +1,60 @@
+.operation-list-container {
+  margin: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.operation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.operation-table th,
+.operation-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.operation-table th {
+  background-color: #f4f4f4;
+  text-align: left;
+}
+
+.main-row {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.main-row:hover {
+  background-color: #f0f8ff;
+}
+
+.details-row td {
+  background-color: #fafafa;
+  padding: 5px;
+}
+
+.details-row table th,
+.details-row table td {
+  border: 1px solid #ccc;
+  padding: 4px;
+  font-size: 0.9em;
+}
+
+.saldo-actions input {
+  width: 150px;
+  margin-right: 5px;
+}
+
+.operation-table td {
+  white-space: nowrap;
+}
+
+.operation-table th {
+  white-space: nowrap;
+}
+
+.operation-table td:last-child {
+  min-width: 140px;
+  font-weight: bold;
+}
+

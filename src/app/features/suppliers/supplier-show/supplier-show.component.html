@@ -1,0 +1,26 @@
+<div class="container mt-4" *ngIf="supplier">
+  <h2>📋 Detalles del Proveedor</h2>
+  <ul class="list-group">
+    <li class="list-group-item"><strong>ID:</strong> {{ supplier.id }}</li>
+    <li class="list-group-item"><strong>NIT:</strong> {{ supplier.nit }}</li>
+    <li class="list-group-item"><strong>Nombre:</strong> {{ supplier.name }}</li>
+    <li class="list-group-item"><strong>Tipo:</strong> {{ supplier.type }}</li>
+    <li class="list-group-item"><strong>Dirección:</strong> {{ supplier.direction }}</li>
+    <li class="list-group-item"><strong>Teléfono:</strong> {{ supplier.phone }}</li>
+    <li class="list-group-item"><strong>Correo:</strong> {{ supplier.email }}</li>
+    <li class="list-group-item">
+      <strong>Activo:</strong>
+      <span [ngClass]="supplier.isActive ? 'text-success' : 'text-danger'">
+        {{ supplier.isActive ? 'Sí' : 'No' }}
+      </span>
+    </li>
+  </ul>
+
+  <div class="mt-4">
+    <button class="btn btn-secondary" routerLink="/suppliers">⬅ Volver</button>
+  </div>
+</div>
+
+<div *ngIf="!supplier" class="alert alert-warning mt-4">
+  ⚠ No se encontró información del proveedor.
+</div>

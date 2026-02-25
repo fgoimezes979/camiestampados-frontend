@@ -1,0 +1,67 @@
+/* --- Estilos generales del dashboard --- */
+.dashboard {
+  background: #f9fafb; /* gris muy claro */
+  min-height: 100vh;
+}
+
+/* --- Estilo para las cards de KPIs --- */
+.card {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Tipografía */
+.card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Colores personalizados */
+.bg-blue-100 {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+}
+.bg-indigo-100 {
+  background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+}
+.bg-green-100 {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+}
+.bg-yellow-100 {
+  background: linear-gradient(135deg, #fef9c3, #fde68a);
+}
+
+/* Texto */
+.text-blue-700 { color: #1d4ed8; }
+.text-indigo-700 { color: #4338ca; }
+.text-green-700 { color: #15803d; }
+.text-yellow-700 { color: #ca8a04; }
+
+/* --- Sección del gráfico --- */
+.chart {
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.chart:hover {
+  transform: scale(1.01);
+}
+
+.chart h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #111827;
+}

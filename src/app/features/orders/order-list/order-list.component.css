@@ -1,0 +1,91 @@
+.operation-list-container {
+  padding: 20px;
+}
+
+.btn-create {
+  background-color: #4caf50;
+  color: rgb(27, 51, 50);
+  padding: 8px 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-create:hover {
+  background-color: #45a049;
+}
+
+.operation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.operation-table th,
+.operation-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.operation-table th {
+  background-color: #564786;
+}
+
+.income {
+  color: green;
+  font-weight: bold;
+}
+
+.outcome {
+  color: red;
+  font-weight: bold;
+}
+.actions {
+  margin-bottom: 15px;
+}
+
+.btn-new {
+  background-color: #4CAF50;
+  color: white;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-new:hover {
+  background-color: #45a049;
+}
+td {
+  padding: 8px;
+}
+
+.btn-edit, .btn-delete {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-edit {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1976D2;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f;
+}
+
+

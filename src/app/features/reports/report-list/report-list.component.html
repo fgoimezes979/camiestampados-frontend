@@ -1,0 +1,195 @@
+<div class="report-container">
+
+  <h2 class="title">📊 Reporte de Inventario</h2>
+
+  <!-- ESTADO -->
+  <div *ngIf="loading" class="info">Cargando reportes...</div>
+
+  <!-- =========================
+       TOTALES
+  ========================== -->
+  <div class="totals-grid">
+
+  <!-- ENTRADAS (UNIDADES) -->
+  <div class="card entradas">
+    <h4>Entradas</h4>
+    <p>{{ totalEntradas || 0 | number }}</p>
+  </div>
+
+  <!-- SALIDAS (UNIDADES) -->
+  <div class="card salidas">
+    <h4>Salidas</h4>
+    <p>{{ totalSalidas || 0 | number }}</p>
+  </div>
+
+  <!-- BALANCE (UNIDADES) -->
+  <div class="card balance">
+    <h4>Balance</h4>
+    <p>{{ balance || 0 | number }}</p>
+  </div>
+
+  <!-- COSTO (DINERO) -->
+  <div class="card cost">
+    <h4>Costo Inventario</h4>
+    <p>{{ totalCost || 0 | currency:'COP' }}</p>
+  </div>
+
+</div>
+
+  <!-- =========================
+       TOTALESPOR PRODUCTOS
+  ========================== -->
+  <h3 class="subtitle">Totales por producto</h3>
+
+<table class="modern-table" *ngIf="totalsByProduct.length > 0">
+
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Entradas</th>
+      <th>Salidas</th>
+      <th>Balance</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let p of totalsByProduct">
+      <td>{{ p.product_name }}</td>
+      <td>{{ p.entradas }}</td>
+      <td>{{ p.salidas }}</td>
+      <td [class.negative]="p.balance < 0">
+        {{ p.balance }}
+      </td>
+    </tr>
+  </tbody>
+
+</table>
+
+
+  <!-- =========================
+       FILTROS
+  ========================== -->
+  <div class="filters">
+
+    <!-- PRODUCTO -->
+    <div class="filter-group">
+      <label>Producto</label>
+      <select [(ngModel)]="selectedProduct">
+        <option [ngValue]="undefined">Todos</option>
+        <option *ngFor="let p of products; trackBy: trackById" [ngValue]="p.id">
+          {{ p.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- UBICACIÓN -->
+    <div class="filter-group">
+      <label>Ubicación</label>
+      <select [(ngModel)]="selectedLocation">
+        <option [ngValue]="undefined">Todas</option>
+        <option *ngFor="let l of locations; trackBy: trackById" [ngValue]="l.id">
+          {{ l.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- DESDE -->
+    <div class="filter-group">
+      <label>Desde</label>
+      <input type="date" [(ngModel)]="startDate">
+    </div>
+
+    <!-- HASTA -->
+    <div class="filter-group">
+      <label>Hasta</label>
+      <input type="date" [(ngModel)]="endDate">
+    </div>
+
+    <!-- BOTONES -->
+    <div class="filter-buttons">
+      <button class="btn-filter" (click)="loadReport()">🔍 Filtrar</button>
+
+      <button class="btn-clear"
+        (click)="startDate=''; endDate=''; selectedProduct=undefined; selectedLocation=undefined; loadReport()">
+        🧹 Limpiar
+      </button>
+    </div>
+
+  </div>
+
+  <!-- =========================
+       ACCIONES
+  ========================== -->
+  <div class="actions">
+    <button class="btn-excel" (click)="descargarExcel()">
+      📥 Descargar Excel
+    </button>
+  </div>
+
+  <!-- =========================
+       SIN RESULTADOS
+  ========================== -->
+  <div *ngIf="!loading && movements.length === 0" class="info">
+    No hay movimientos para los filtros seleccionados.
+  </div>
+
+  <!-- =========================
+       TABLA
+  ========================== -->
+  <table *ngIf="movements.length > 0" class="modern-table">
+
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Movimiento</th>
+        <th>Cantidad</th>
+        <th>Saldo</th>
+        <th>Ubicación</th>
+        <th>Usuario</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let m of movements; trackBy: trackById">
+
+        <td>{{ m.product_name }}</td>
+
+        <td>
+          <span
+            [class.entry]="m.movement_type === 'ENTRY'"
+            [class.sale]="m.movement_type === 'SALE'"
+            [class.return]="m.movement_type === 'RETURN'"
+            [class.adjust]="m.movement_type === 'ADJUST'"
+            [class.transfer]="m.movement_type === 'TRANSFER'">
+
+            {{
+              m.movement_type === 'ENTRY' ? 'Entrada' :
+              m.movement_type === 'SALE' ? 'Venta' :
+              m.movement_type === 'RETURN' ? 'Devolución' :
+              m.movement_type === 'ADJUST' ? 'Ajuste' :
+              m.movement_type === 'TRANSFER' ? 'Traslado' :
+              m.movement_type
+            }}
+
+          </span>
+        </td>
+
+        <td>{{ m.quantity }}</td>
+
+        <td [class.negative]="m.balance < 0">
+          {{ m.balance }}
+        </td>
+
+        <td>{{ m.location }}</td>
+
+        <td>{{ m.user }}</td>
+
+        <td>{{ m.date | date:'short' }}</td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

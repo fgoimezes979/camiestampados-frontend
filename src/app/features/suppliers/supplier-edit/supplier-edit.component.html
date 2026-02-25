@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2>✏️ Editar Proveedor</h2>
+
+  <form [formGroup]="supplierForm" (ngSubmit)="onsubmit()">
+    <!-- Código -->
+    <div class="mb-3">
+      <label for="code" class="form-label">NIT: </label>
+      <input type="text" id="code" class="form-control" formControlName="code" readonly/>
+    </div>
+
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre de empresa:</label>
+      <input type="text" id="name" class="form-control" formControlName="name" />
+    </div>
+
+   <!-- Tipo -->
+<div class="mb-3">
+  <label for="type" class="form-label">Tipo:</label>
+  <input type="text" id="type" class="form-control" formControlName="type" />
+</div>
+
+
+
+    
+    <!-- Dirección -->
+    <div class="mb-3">
+      <label for="direction" class="form-label">Dirección:</label>
+      <input type="text" id="direction" class="form-control" formControlName="direction" />
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Teléfono:</label>
+      <input type="text" id="phone" class="form-control" formControlName="phone" />
+    </div>
+
+
+    <!-- Correo -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo electrónico:</label>
+      <input type="email" id="email" class="form-control" formControlName="email" />
+    </div>
+
+   
+
+
+    
+
+   
+
+
+    <!-- Activo -->
+    <div class="form-check mb-3">
+      <input type="checkbox" id="isActive" class="form-check-input" formControlName="isActive" />
+      <label class="form-check-label" for="isActive">¿Activo?</label>
+    </div>
+
+   
+
+    <!-- Botones -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-success me-2" [disabled]="supplierForm.invalid">
+        💾 Guardar cambios
+      </button>
+      <button type="button" class="btn btn-secondary" routerLink="/clients">
+        ⬅ Cancelar
+      </button>
+    </div>
+  </form>
+</div>

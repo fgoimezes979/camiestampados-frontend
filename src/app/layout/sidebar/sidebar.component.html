@@ -1,0 +1,159 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="#" class="brand-link">
+    <span class="brand-text font-weight-light">Inventario Camiestampados</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Sidebar user panel -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6RM6W7xrOhZM7j2doYvqktHT2HWYWOi_4xQ&s" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">Lucindo Gomez</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <!-- Dashboard -->
+        <li class="nav-item">
+          <a [routerLink]="['/dashboard']" class="nav-link">
+            <i class="fas fa-home nav-icon"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+
+        <!-- Inventario -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="fas fa-boxes nav-icon"></i>
+            <p>
+              Inventario
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/clients/list']" class="nav-link">
+                <i class="fas fa-user nav-icon"></i>
+                <p>Clientes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/products/list']" class="nav-link">
+                <i class="fas fa-tshirt nav-icon"></i>
+                <p>Productos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/locations/list']" class="nav-link">
+                <i class="fas fa-map-marker-alt nav-icon"></i>
+                <p>Ubicaciones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/suppliers/list']" class="nav-link">
+                <i class="fas fa-truck nav-icon"></i>
+                <p>Proveedores</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/users/list']" class="nav-link">
+                <i class="fas fa-users nav-icon"></i>
+                <p>Usuarios</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/entries/list']" class="nav-link">
+                <i class="fas fa-sign-in-alt nav-icon"></i>
+                <p>Entradas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/outs/list']" class="nav-link">
+                <i class="fas fa-sign-out-alt nav-icon"></i>
+                <p>Salidas</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/operations/list']" class="nav-link">
+                <i class="fas fa-cogs nav-icon"></i>
+                <p>Operaciones</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/txs/list']" class="nav-link">
+                <i class="fas fa-exchange-alt nav-icon"></i>
+                <p>Movimientos</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/orders/list']" class="nav-link">
+                <i class="fas fa-receipt nav-icon"></i>
+                <p>Órdenes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/clients-management/list']" class="nav-link">
+                <i class="fas fa-user-cog nav-icon"></i>
+                <p>Gestión de clientes</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/sessions/list']" class="nav-link">
+                <i class="fas fa-clock nav-icon"></i>
+                <p>Sesiones</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Contabilidad -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="fas fa-wallet nav-icon"></i>
+            <p>
+              Contabilidad
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a [routerLink]="['/accounting/journal']" class="nav-link">
+                <i class="fas fa-book nav-icon"></i>
+                <p>Asientos contables</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/accounting/journal/new']" class="nav-link">
+                <i class="fas fa-plus-circle nav-icon"></i>
+                <p>Nuevo asiento</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Reportes -->
+       <li class="nav-item">
+  <a [routerLink]="['/reports/list']" class="nav-link">
+    <i class="fas fa-file-alt nav-icon"></i>
+    <p>Reportes</p>
+  </a>
+</li>
+<li class="nav-item">
+  <a [routerLink]="['/reports/create']" class="nav-link">
+    <i class="fas fa-plus-circle nav-icon"></i>
+    <p>Nuevo reporte</p>
+  </a>
+</li>
+
+      </ul>
+    </nav>
+  </div>
+</aside>

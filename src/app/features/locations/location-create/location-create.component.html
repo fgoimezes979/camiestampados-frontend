@@ -1,0 +1,37 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <form [formGroup]="locationForm" (ngSubmit)="onSubmit()"
+        style="display: flex; flex-direction: column; gap: 15px; width: 320px; padding: 20px;
+               border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    
+    <!-- Nombre de la ubicación -->
+    <div style="display: flex; flex-direction: column;">
+      <label for="name">Nombre:</label>
+      <input id="name" type="text" formControlName="name" style="padding: 8px;">
+    </div>
+
+    <!-- Capacidad de la ubicación -->
+    <div style="display: flex; flex-direction: column;">
+      <label for="ability">Capacidad:</label>
+      <input id="ability" type="number" formControlName="ability" min="1" style="padding: 8px;">
+
+    </div>
+
+    <!-- Activo / Inactivo -->
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <input id="is_active" type="checkbox" formControlName="isActive">
+      <label for="is_active" style="margin: 0;">Activo</label>
+    </div>
+
+    <!-- Botones -->
+    <button type="submit" [disabled]="!locationForm.valid"
+            style="padding: 10px; background-color: #1976d2; color: white; border: none; border-radius: 4px;">
+      Crear Ubicación
+    </button>
+
+    <button routerLink="/locations/list"
+            style="padding: 10px; margin-top: 8px; background-color: #e0e0e0; border: none; border-radius: 4px;">
+      ⬅ Volver a la lista
+    </button>
+  
+  </form>
+</div>

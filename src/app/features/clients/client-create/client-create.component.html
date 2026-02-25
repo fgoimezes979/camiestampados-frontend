@@ -1,0 +1,43 @@
+<div class="form-wrapper">
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="form">
+    <h2>Crear Cliente</h2>
+
+    
+
+    <label for="name">Nombre :</label>
+    <input id="name" name="name" formControlName="name" type="text" autocomplete="name" />
+
+   <label for="last_name">Apellido:</label>
+<input id="last_name" name="last_name" formControlName="last_name" type="text" autocomplete="family-name" />
+
+    <label for="birth">Fecha de nacimiento:</label>
+    <input id="birth" name="birth" formControlName="birth" type="date" autocomplete="bday" />
+
+    <label for="sex">Sexo:</label>
+    <select id="sex" name="sex" formControlName="sex" autocomplete="sex">
+      <option value="">Seleccione...</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+    </select>
+
+    <label for="direction">Dirección:</label>
+    <input id="direction" name="direction" formControlName="direction" type="text" autocomplete="street-address" />
+
+    <label for="phone">Teléfono:</label>
+    <input id="phone" name="phone" formControlName="phone" type="text" autocomplete="tel" />
+
+    <label for="email">Correo electrónico:</label>
+    <input id="email" name="email" formControlName="email" type="email" autocomplete="email" />
+
+    
+
+    <label class="checkbox-label">
+      <input type="checkbox" id="is_active" name="is_active" formControlName="is_active" />
+      ¿Está activo?
+    </label>
+
+    <button type="submit">crear Cliente</button>
+    
+   
+  </form>
+</div>

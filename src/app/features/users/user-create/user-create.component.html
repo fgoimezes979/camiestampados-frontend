@@ -1,0 +1,84 @@
+<div class="form-wrapper" style="max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background-color: #fff;">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" style="display: flex; flex-direction: column; gap: 15px;">
+    
+    <h2 style="text-align: center; margin-bottom: 20px; color: #333;">Crear Usuario</h2>
+
+    <!-- Datos personales -->
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Primer nombre</label>
+      <input placeholder="Primer nombre" formControlName="firstname" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Segundo nombre</label>
+      <input placeholder="Segundo nombre" formControlName="secondname" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Primer apellido</label>
+      <input placeholder="Primer apellido" formControlName="firstlastname" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Segundo apellido</label>
+      <input placeholder="Segundo apellido" formControlName="secondlastname" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <!-- Selección de rol -->
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Rol</label>
+      <select formControlName="role" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+      </select>
+    </div>
+
+    <!-- Estado activo -->
+    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+      <input type="checkbox" formControlName="is_active" id="activeCheck">
+      <label for="activeCheck">Activo</label>
+    </div>
+
+    <!-- Selección de foto mediante miniaturas -->
+    <div class="form-group" style="display: flex; flex-direction: column; align-items: center;">
+      <label>Foto de usuario</label>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin: 10px 0;">
+        <div *ngFor="let img of images" style="text-align:center; cursor:pointer;" 
+             (click)="userForm.patchValue({photo: img})">
+          <img 
+            [src]="'assets/' + img" 
+            [style.border]="userForm.get('photo')?.value === img ? '3px solid #28a745' : '1px solid #ccc'"
+            width="80" 
+            height="80" 
+            style="border-radius:6px;"
+            alt="{{ img }}">
+          <div style="font-size:12px; margin-top:3px;">{{ img }}</div>
+        </div>
+      </div>
+
+      <!-- Preview principal -->
+      <div style="margin-top:10px;">
+        <img 
+          [src]="userForm.get('photo')?.value ? 'assets/' + userForm.get('photo')?.value : 'assets/foto_u1.jpg'" 
+          alt="Foto usuario" 
+          width="120" 
+          style="border-radius:6px; border:1px solid #ccc;">
+      </div>
+    </div>
+
+    <!-- Credenciales -->
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Correo electrónico</label>
+      <input type="email" placeholder="Correo electrónico" formControlName="email" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <div class="form-group" style="display: flex; flex-direction: column;">
+      <label>Contraseña</label>
+      <input type="password" placeholder="Contraseña" formControlName="password" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+    </div>
+
+    <!-- Botón de envío -->
+    <button type="submit" [disabled]="userForm.invalid" style="padding: 10px; background-color: #28a745; color: #fff; border:none; border-radius: 6px; cursor:pointer; font-weight:bold; transition: background 0.3s;">
+      ➕ Crear Usuario
+    </button>
+  </form>
+</div>

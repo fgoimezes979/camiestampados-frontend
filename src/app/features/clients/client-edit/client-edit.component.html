@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h2>✏️ Editar Cliente</h2>
+
+  <form [formGroup]="clientForm" (ngSubmit)="onsubmit()">
+    <!-- Código -->
+    <div class="mb-3">
+      <label for="code" class="form-label">Código:</label>
+      <input type="text" id="code" class="form-control" formControlName="code" />
+    </div>
+
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Nombre:</label>
+      <input type="text" id="name" class="form-control" formControlName="name" />
+    </div>
+
+    <!-- Apellido -->
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Apellido:</label>
+      <input type="text" id="last_name" class="form-control" formControlName="last_name" />
+    </div>
+
+    <!-- Fecha de nacimiento -->
+    <div class="mb-3">
+      <label for="birth" class="form-label">Fecha de nacimiento:</label>
+      <input type="date" id="birth" class="form-control" formControlName="birth" />
+    </div>
+
+     <!-- Sexo -->
+    <div class="mb-3">
+      <label for="sex" class="form-label">Sexo:</label>
+      <select id="sex" class="form-select" formControlName="sex">
+        <option value="">Seleccione</option>
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+      </select>
+    </div>
+
+    <!-- Dirección -->
+    <div class="mb-3">
+      <label for="direction" class="form-label">Dirección:</label>
+      <input type="text" id="direction" class="form-control" formControlName="direction" />
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-3">
+      <label for="phone" class="form-label">Teléfono:</label>
+      <input type="text" id="phone" class="form-control" formControlName="phone" />
+    </div>
+
+
+    <!-- Correo -->
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo electrónico:</label>
+      <input type="email" id="email" class="form-control" formControlName="email" />
+    </div>
+
+   
+
+
+    
+
+   
+
+
+    <!-- Activo -->
+    <div class="form-check mb-3">
+      <input type="checkbox" id="is_active" class="form-check-input" formControlName="is_active" />
+      <label class="form-check-label" for="is_active">¿Activo?</label>
+    </div>
+
+   
+
+    <!-- Botones -->
+    <div class="mt-4">
+      <button type="submit" class="btn btn-success me-2" [disabled]="clientForm.invalid">
+        💾 Guardar cambios
+      </button>
+      <button type="button" class="btn btn-secondary" routerLink="/clients">
+        ⬅ Cancelar
+      </button>
+    </div>
+  </form>
+</div>

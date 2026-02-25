@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2>Edit Entry</h2>
+
+  <form [formGroup]="entryForm" (ngSubmit)="onSubmit()" novalidate>
+    <!-- Code -->
+    <div class="mb-3">
+      <label class="form-label">Code</label>
+      <input type="text" class="form-control" formControlName="code"
+             [ngClass]="{'is-invalid': entryForm.get('code')?.invalid && entryForm.get('code')?.touched}" />
+      <div class="invalid-feedback">Code is required.</div>
+    </div>
+
+    <!-- Product -->
+    <div class="mb-3">
+      <label for="productId" class="form-label">Product</label>
+      <select class="form-select" id="productId" formControlName="productId">
+        <option value="">-- Select a product --</option>
+        <option *ngFor="let product of products" [value]="product.product_id">
+          {{ product.code_product }} - {{ product.description }}
+        </option>
+      </select>
+      <div class="invalid-feedback">Product is required.</div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="mb-3">
+      <label class="form-label">Quantity</label>
+      <input type="number" class="form-control" formControlName="quantity"
+             [ngClass]="{'is-invalid': entryForm.get('quantity')?.invalid && entryForm.get('quantity')?.touched}" />
+      <div class="invalid-feedback">Quantity must be greater than 0.</div>
+    </div>
+
+    <!-- Date -->
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input type="date" class="form-control" formControlName="date"
+             [ngClass]="{'is-invalid': entryForm.get('date')?.invalid && entryForm.get('date')?.touched}" />
+      <div class="invalid-feedback">Date is required.</div>
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <select class="form-select" formControlName="locationId"
+              [ngClass]="{'is-invalid': entryForm.get('locationId')?.invalid && entryForm.get('locationId')?.touched}">
+        <option value="">-- Select a location --</option>
+        <option *ngFor="let l of locations" [value]="l.location_id">{{ l.name }}</option>
+      </select>
+      <div class="invalid-feedback">Location is required.</div>
+    </div>
+
+    <!-- User -->
+    <div class="mb-3">
+      <label class="form-label">User</label>
+      <input type="text" class="form-control" formControlName="user"
+             [ngClass]="{'is-invalid': entryForm.get('user')?.invalid && entryForm.get('user')?.touched}" />
+      <div class="invalid-feedback">User is required.</div>
+    </div>
+
+    <!-- Active -->
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" formControlName="isActive" />
+      <label class="form-check-label">Active</label>
+    </div>
+
+    <!-- Buttons -->
+    <button type="submit" class="btn btn-primary me-2" [disabled]="entryForm.invalid">💾 Save</button>
+    <button type="button" class="btn btn-secondary" routerLink="/entries">❌ Cancel</button>
+  </form>
+</div>
+

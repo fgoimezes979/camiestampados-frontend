@@ -1,0 +1,86 @@
+<div class="operation-create-container">
+  <h2>➕ Crear Operación</h2>
+
+  <form [formGroup]="operationForm" (ngSubmit)="onSubmit()">
+
+    <div formGroupName="operation">
+
+      <!-- Fecha -->
+      <div class="form-group">
+        <label for="date">Fecha</label>
+        <input
+          type="datetime-local"
+          id="date"
+          name="date"
+          formControlName="date"
+          required
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          formControlName="description"
+          placeholder="Ej: Venta de producto"
+        />
+      </div>
+
+      <!-- Usuario -->
+      <div class="form-group">
+        <label for="user">Usuario</label>
+        <input
+          type="text"
+          id="user"
+          name="user"
+          formControlName="user"
+          placeholder="Ej: admin"
+          required
+        />
+      </div>
+
+      <!-- Precio unitario -->
+      <div class="form-group">
+        <label for="purchasePrice">Precio unitario</label>
+        <input
+          type="number"
+          id="purchasePrice"
+          name="purchasePrice"
+          formControlName="purchasePrice"
+          required
+        />
+      </div>
+
+      <!-- Cantidad -->
+      <div class="form-group">
+        <label for="quantity">Cantidad</label>
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          formControlName="quantity"
+          required
+        />
+      </div>
+
+      <!-- Tipo -->
+      <div class="form-group">
+        <label for="type">Tipo</label>
+        <select id="type" name="type" formControlName="type" required>
+          <option value="">-- Selecciona --</option>
+          <option value="INCOME">Ingreso</option>
+          <option value="OUTCOME">Egreso</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Botón -->
+    <button type="submit" [disabled]="operationForm.invalid">
+      Guardar
+    </button>
+  </form>
+</div>

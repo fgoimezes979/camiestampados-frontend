@@ -1,0 +1,141 @@
+<div class="content-wrapper">
+
+  <section class="content-header">
+    <div class="container-fluid">
+      <h2 class="mb-3">Crear / Editar Producto</h2>
+    </div>
+  </section>
+
+  <section class="content">
+          <div class="container-fluid">
+ 
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0">Formulario de Producto</h3>
+        </div>
+
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+          <div class="card-body">
+
+            <div class="row">
+
+              <!-- 🟦 FORMULARIO IZQUIERDA -->
+              <div class="col-md-8">
+
+                <!-- Nombre -->
+                <div class="form-group mb-3">
+                  <label>Nombre</label>
+                  <input class="form-control" formControlName="name">
+                </div>
+
+                <!-- Categoría -->
+                <div class="form-group mb-3">
+                  <label>Categoría</label>
+                  <input class="form-control" formControlName="category">
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label>Cantidad</label>
+                    <input type="number" class="form-control" formControlName="quantity">
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label>Estado</label>
+                    <select class="form-control" formControlName="isActive">
+                      <option [ngValue]="true">Activo</option>
+                      <option [ngValue]="false">Inactivo</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label>Precio compra</label>
+                    <input type="number" class="form-control" formControlName="purchasePrice">
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label>Precio venta</label>
+                    <input type="number" class="form-control" formControlName="salePrice">
+                  </div>
+                </div>
+
+                <!-- Proveedor -->
+                <div class="form-group mb-3">
+                  <label>Proveedor</label>
+                  <select class="form-control" formControlName="supplierId">
+                    <option value="">Seleccione proveedor</option>
+                    <option *ngFor="let sup of suppliers" [value]="sup.id">
+                      {{ sup.name }} ({{ sup.code }})
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="form-group mb-3">
+                  <label>Ubicación</label>
+                  <select class="form-control" formControlName="locationId">
+                    <option value="">Seleccione ubicación</option>
+                    <option *ngFor="let loc of locations" [value]="loc.id">
+                      {{ loc.name }} ({{ loc.code }})
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Galería -->
+                <div class="form-group mb-3">
+                  <label>Selecciona una imagen</label>
+
+                  <div class="d-flex flex-wrap gap-3 mt-2">
+                    <div
+                      *ngFor="let img of images"
+                      class="image-box"
+                      (click)="selectImage(img)"
+                      [class.selected]="productForm.value.image === img">
+
+                      <img
+                        [src]="img"
+                        width="80"
+                        height="80"
+                        class="rounded"
+                        style="object-fit: cover;">
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- 🟩 IMAGEN GRANDE DERECHA -->
+              <div class="col-md-4 text-center border-start">
+
+                <p class="text-muted mb-2">Vista previa</p>
+
+                <img
+                  [src]="productForm.value.image || 'assets/img/no-image.png'"
+                  class="img-fluid rounded shadow"
+                  style="max-height: 320px; object-fit: cover;"
+                >
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="card-footer d-flex justify-content-between">
+            <button routerLink="/products/list" type="button" class="btn btn-secondary">
+              Volver
+            </button>
+
+            <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">
+              Guardar Producto
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</div>

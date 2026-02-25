@@ -1,0 +1,46 @@
+<div class="p-6 space-y-8">
+
+  <!-- KPIs -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div class="card bg-blue-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <h3 class="text-lg font-semibold text-blue-700 flex items-center justify-center">
+        <i class="fas fa-boxes mr-2"></i> Productos Distintos
+      </h3>
+      <p class="text-3xl font-bold mt-2">{{ totalProducts }}</p>
+      <span class="text-sm text-blue-600">+5% desde el mes pasado</span>
+    </div>
+
+    <div class="card bg-indigo-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <h3 class="text-lg font-semibold text-indigo-700 flex items-center justify-center">
+        <i class="fas fa-cubes mr-2"></i> Unidades en Inventario
+      </h3>
+      <p class="text-3xl font-bold mt-2">{{ totalUnidades }}</p>
+      <span class="text-sm text-indigo-600">+2% desde el mes pasado</span>
+    </div>
+
+    <div class="card bg-green-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <h3 class="text-lg font-semibold text-green-700 flex items-center justify-center">
+        <i class="fas fa-truck mr-2"></i> Total Proveedores
+      </h3>
+      <p class="text-3xl font-bold mt-2">{{ totalSuppliers }}</p>
+      <span class="text-sm text-green-600">0 cambios este mes</span>
+    </div>
+
+    <div class="card bg-yellow-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
+      <h3 class="text-lg font-semibold text-yellow-700 flex items-center justify-center">
+        <i class="fas fa-file-invoice mr-2"></i> Órdenes Pendientes
+      </h3>
+      <p class="text-3xl font-bold mt-2">{{ pendingOrders }}</p>
+      <span class="text-sm text-yellow-700">-1 desde ayer</span>
+    </div>
+  </div>
+
+  <!-- Gráfico de ventas -->
+  <div class="bg-white p-6 rounded-2xl shadow-lg">
+    <h3 class="text-xl font-bold mb-4 text-gray-700 flex items-center">
+      <i class="fas fa-chart-line mr-2"></i> Ventas del Mes
+    </h3>
+    <canvas id="ventasChart" class="w-full h-40"></canvas>
+  </div>
+
+</div>

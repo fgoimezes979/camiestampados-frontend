@@ -1,0 +1,106 @@
+<div class="container mt-4">
+
+  <h2 class="mb-4">🍎 Detalles del Producto</h2>
+
+  <div *ngIf="product; else noProduct">
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+
+        <div class="row">
+
+          <!-- 🟦 INFO PRODUCTO (IZQUIERDA) -->
+          <div class="col-md-8">
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">ID:</div>
+              <div class="col-8">{{ product.id }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Código:</div>
+              <div class="col-8">{{ product.code }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Nombre:</div>
+              <div class="col-8">{{ product.name }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Categoría:</div>
+              <div class="col-8">{{ product.category }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Cantidad:</div>
+              <div class="col-8">{{ product.quantity }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Precio compra:</div>
+              <div class="col-8">{{ product.purchasePrice | currency:'COP' }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Precio venta:</div>
+              <div class="col-8">{{ product.salePrice | currency:'COP' }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Proveedor ID:</div>
+              <div class="col-8">{{ product.supplierId }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Ubicación:</div>
+              <div class="col-8">{{ product.locations }}</div>
+            </div>
+
+            <div class="row mb-2">
+              <div class="col-4 fw-bold">Estado:</div>
+              <div class="col-8">
+                <span
+                  class="badge"
+                  [ngClass]="product.isActive ? 'bg-success' : 'bg-secondary'">
+                  {{ product.isActive ? 'Activo' : 'Inactivo' }}
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 🟩 IMAGEN GRANDE (DERECHA) -->
+          <div class="col-md-4 text-center border-start">
+
+            <p class="text-muted mb-2">Imagen del producto</p>
+
+            <img
+              [src]="product.image || 'assets/img/no-image.png'"
+              class="img-fluid rounded shadow"
+              style="max-height: 350px; object-fit: cover;"
+              alt="Imagen del producto"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <button
+      routerLink="/products/list"
+      class="btn btn-primary mt-3">
+      ⬅ Volver a la lista
+    </button>
+
+  </div>
+
+  <ng-template #noProduct>
+    <div class="alert alert-warning">
+      ⚠ No se pudo cargar el producto. Verifica el ID en la URL.
+    </div>
+  </ng-template>
+
+</div>

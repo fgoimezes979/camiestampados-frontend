@@ -1,0 +1,12 @@
+.truncate-text {
+  display: inline-block;
+  max-width: 200px; /* ajusta según tu necesidad */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: help;
+  label {
+  color: #6c757d;
+}
+
+}

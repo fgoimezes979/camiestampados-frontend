@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow p-4" style="width: 500px;">
+    <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="form">
+      <h2 class="text-center mb-4">Crear Proveedor</h2>
+
+      <!-- Código -->
+      
+
+      <!-- Nombre -->
+      <div class="mb-3">
+  <label for="nit" class="form-label">NIT:</label>
+  <input id="nit" name="nit" formControlName="nit" type="text" class="form-control" inputmode="numeric" pattern="[0-9]*" />
+</div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Razon Social:</label>
+        <input id="name" name="name" formControlName="name" type="text" class="form-control" autocomplete="name" />
+      </div>
+
+      <!-- Tipo -->
+      <div class="mb-3">
+        <label for="type" class="form-label">Tipo:</label>
+        <input id="type" name="type" formControlName="type" type="text" class="form-control" autocomplete="family-name" />
+      </div>
+
+      <!-- Dirección -->
+      <div class="mb-3">
+        <label for="direction" class="form-label">Dirección:</label>
+        <input id="direction" name="direction" formControlName="direction" type="text" class="form-control" autocomplete="street-address" />
+      </div>
+
+      <!-- Teléfono -->
+      <div class="mb-3">
+        <label for="phone" class="form-label">Teléfono:</label>
+        <input id="phone" name="phone" formControlName="phone" type="text" class="form-control" autocomplete="tel" />
+      </div>
+
+      <!-- Correo -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico:</label>
+        <input id="email" name="email" formControlName="email" type="email" class="form-control" autocomplete="email" />
+      </div>
+
+      <!-- Activo -->
+      <div class="form-check mb-4">
+        <input type="checkbox" id="isActive" name="isActive" formControlName="isActive" class="form-check-input" />
+        <label for="isActive" class="form-check-label">¿Está activo?</label>
+      </div>
+
+      <!-- Botón -->
+      <button type="submit" class="btn btn-primary w-100">Crear Cliente</button>
+    </form>
+  </div>
+</div>
