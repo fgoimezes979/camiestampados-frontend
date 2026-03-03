@@ -1,24 +1,42 @@
-<table *ngIf="entries.length > 0; else noData" class="table">
-  <thead>
-    <tr>
-      <th>Fecha</th>
-      <th>Descripción</th>
-      <th>Debe</th>
-      <th>Haber</th>
-      <th>Monto</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let e of entries">
-      <td>{{ e.date | date: 'shortDate' }}</td>
-      <td>{{ e.description }}</td>
-      <td>{{ e.debitAccount }}</td>
-      <td>{{ e.creditAccount }}</td>
-      <td>{{ e.amount | number:'1.2-2' }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="loading">
+  Cargando libro diario...
+</div>
 
-<ng-template #noData>
-  <p class="text-muted">No hay asientos contables registrados.</p>
-</ng-template>
+<div *ngIf="!loading && groupedEntries.length > 0">
+
+  <div *ngFor="let journal of groupedEntries" class="journal-block">
+
+    <!-- Cabecera del asiento -->
+    <div class="journal-header">
+      <strong>{{ journal.date }}</strong>
+      &nbsp; - &nbsp;
+      {{ journal.description }}
+    </div>
+
+    <!-- Líneas -->
+    <table class="table table-sm">
+      <tbody>
+        <tr *ngFor="let line of journal.lines">
+          <td style="width: 15%">{{ line.account_code }}</td>
+          <td style="width: 45%">{{ line.account_name }}</td>
+
+          <td class="text-end" style="width: 20%">
+            {{ line.debit !== '0.00' ? (line.debit | number:'1.0-0') : '' }}
+          </td>
+
+          <td class="text-end" style="width: 20%">
+            {{ line.credit !== '0.00' ? (line.credit | number:'1.0-0') : '' }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr>
+
+  </div>
+
+</div>
+
+<div *ngIf="!loading && groupedEntries.length === 0">
+  No hay movimientos contables.
+</div>

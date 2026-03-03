@@ -74,3 +74,17 @@ h2 {
   color: #777;
   font-style: italic;
 }
+
+.journal-block {
+  margin-bottom: 25px;
+}
+
+.journal-header {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+hr {
+  margin-top: 5px;
+  margin-bottom: 15px;
+}

@@ -120,11 +120,11 @@ export class OrderCreateComponent implements OnInit {
   ).toISOString(),
 
   // 👇 CAMBIO CLAVE
-  details: this.selectedProducts.map(p => ({
-    product_id: p.product_id,
-    quantity: p.quantity,
-    unit_price: p.unit_price
-  })),
+ products: this.selectedProducts.map(p => ({
+  product_id: p.product_id,
+  quantity: p.quantity,
+  unit_price: p.unit_price
+})),
 
   total_price
 };

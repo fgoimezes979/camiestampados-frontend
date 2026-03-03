@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard'; // Asegúrate de que la ruta sea correcta
+import { AdminGuard } from './core/guards/admin.guard';
+import { ACCOUNTING_ROUTES } from './accounting/accounting.routes';
+
 
 export const routes: Routes = [
 
@@ -16,6 +19,9 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard.component').then(c => c.DashboardComponent),
     canActivate: [AuthGuard]
   },
+
+  
+
   {
     path: 'products',
     loadChildren: () => import('./features/products/product.routes').then(c => c.PRODUCTS_ROUTES),
@@ -45,22 +51,22 @@ export const routes: Routes = [
   {
     path: 'users',
     loadChildren: () => import('./features/users/user.routes').then(c => c.USERS_ROUTES),
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
     {
     path: 'users-edit/:id',
     loadComponent: () => import('./features/users/user-edit/user-edit.component').then(c => c.UserEditComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'users-create',
     loadComponent: () => import('./features/users/user-create/user-create.component').then(c => c.UserCreateComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
     {
     path: 'users-list',
     loadComponent: () => import('./features/users/user-list/user-list.component').then(c => c.UserListComponent),
-    canActivate: [AuthGuard]
+    canActivate: [AdminGuard]
   },
   {
     path: 'users-show/:id',
@@ -111,6 +117,7 @@ export const routes: Routes = [
     loadComponent: () => import('./features/locations/location-edit/location-edit.component').then(c => c.LocationEditComponent),
     canActivate: [AuthGuard]
   },
+
   {
     path: 'locations-show/:id',
     loadComponent: () => import('./features/locations/location-show/location-show.component').then(c => c.LocationShowComponent),
@@ -120,7 +127,7 @@ export const routes: Routes = [
     path: 'locations-list',
     loadComponent: () => import('./features/locations/location-list/location-list.component').then(c => c.LocationListComponent),
     canActivate: [AuthGuard]
-  }, 
+  },
 
     {
     path: 'locations-create',
@@ -305,9 +312,48 @@ export const routes: Routes = [
     loadComponent: () => import('./features/clients-management/client-show/client-show.component').then(c => c.ClientShowComponent),
     canActivate: [AuthGuard]
   },
- 
-   {
-    path: '**',
-    loadComponent: () => import('./layout/page-not-fo/page-not-fo.component').then(c => c.PageNotFoComponent)
-  },
+  {
+  path: 'accounting',
+  children: ACCOUNTING_ROUTES,
+  canActivate: [AuthGuard]
+},
+
+{
+  path: 'trial-balance',
+  loadComponent: () =>
+    import('./accounting/trial-balance/trial-balance.component')
+      .then(m => m.TrialBalanceComponent),
+  canActivate: [AuthGuard]
+},
+
+{
+  path: 'income-statement',
+  loadComponent: () =>
+    import('./accounting/income-statement/income-statement.component')
+      .then(m => m.IncomeStatementComponent),
+  canActivate: [AuthGuard]
+},
+{
+  path: 'balance-sheet',
+  loadComponent: () =>
+    import('./accounting/balance-sheet/balance-sheet.component')
+      .then(m => m.BalanceSheetComponent),
+  canActivate: [AuthGuard]
+},
+
+
+{
+  path: '',
+  redirectTo: 'accounting/journals',
+  pathMatch: 'full'
+},
+
+{
+  path: '**',
+  loadComponent: () =>
+    import('./layout/page-not-fo/page-not-fo.component')
+      .then(c => c.PageNotFoComponent)
+},
+
+
 ];

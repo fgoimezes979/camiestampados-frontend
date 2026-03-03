@@ -1,22 +1,39 @@
 import { Routes } from "@angular/router";
-import { ReportListComponent } from "./report-list/report-list.component";
-import { ReportCreateComponent } from "./report-create/report-create.component";
-import { ReportEditComponent } from "./report-edit/report-edit.component";
-import { ReportShowComponent } from "./report-show/report-show.component";
 
 export const REPORTS_ROUTES: Routes = [
-  // Lista de reportes
-  { path: 'list', component: ReportListComponent },
 
-  // Crear reporte
-  { path: 'create', component: ReportCreateComponent },
+  {
+    path: 'list',
+    loadComponent: () =>
+      import('./report-list/report-list.component')
+        .then(c => c.ReportListComponent)
+  },
 
-  // Editar reporte (requiere ID)
-  { path: 'edit/:id', component: ReportEditComponent },
+  {
+    path: 'create',
+    loadComponent: () =>
+      import('./report-create/report-create.component')
+        .then(c => c.ReportCreateComponent)
+  },
 
-  // Mostrar reporte (requiere ID)
-  { path: 'show/:id', component: ReportShowComponent },
+  {
+    path: 'edit/:id',
+    loadComponent: () =>
+      import('./report-edit/report-edit.component')
+        .then(c => c.ReportEditComponent)
+  },
 
-  // Ruta por defecto al entrar a /report
-  { path: '', redirectTo: 'list', pathMatch: 'full' }
+  {
+    path: 'show/:id',
+    loadComponent: () =>
+      import('./report-show/report-show.component')
+        .then(c => c.ReportShowComponent)
+  },
+
+  {
+    path: '',
+    redirectTo: 'list',
+    pathMatch: 'full'
+  }
+
 ];

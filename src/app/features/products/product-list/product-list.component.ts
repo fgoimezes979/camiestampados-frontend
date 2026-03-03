@@ -7,15 +7,15 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [RouterModule,CommonModule,FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './product-list.component.html',
   styles: ``
 })
 export class ProductListComponent implements OnInit {
 
   products: any[] = [];
-editingId:number | null = null;
-product: any;
+  editingId: number | null = null;
+  searchText: string = '';
 
   constructor(private productService: ProductService) {}
 
@@ -24,23 +24,33 @@ product: any;
   }
 
   loadProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (response: { products: any[] } | any[]) => {
-        this.products = Array.isArray(response) ? response : response.products;
-        console.log('✅ Productos cargados:', this.products);
-      },
-      error: (err: any) => {
-        console.error('❌ Error al cargar productos:', err);
-      }
-    });
+  this.productService.getAllProducts().subscribe({
+    next: (response: { products: any[] } | any[]) => {
+
+      const rawProducts = Array.isArray(response)
+        ? response
+        : response.products;
+
+      // 🔥 Normalizamos nombres de campos
+      this.products = rawProducts.map((p: any) => ({
+        ...p,
+        taxType: p.taxType ?? p.tax_type ?? null,
+        taxRate: p.taxRate ?? p.tax_rate ?? 0
+      }));
+
+      console.log('✅ Productos normalizados:', this.products);
+    },
+    error: (err: any) => {
+      console.error('❌ Error al cargar productos:', err);
     }
+  });
+}
 
   startEdit(id: number) {
     this.editingId = id;
   }
 
   saveEdit(product: any) {
-    // Aquí normalmente llamarías al servicio para guardar el producto editado
     console.log('✅ Producto guardado:', product);
     this.editingId = null;
   }
@@ -49,19 +59,36 @@ product: any;
     this.editingId = null;
   }
 
-  searchText: string = '';
+  // 🔎 FILTRO MEJORADO
+  get filteredProducts() {
+    if (!this.searchText) return this.products;
 
-get filteredProducts() {
-  if (!this.searchText) return this.products;
+    const search = this.searchText.toLowerCase();
 
-  return this.products.filter(p =>
-    p.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
-    p.code.toLowerCase().includes(this.searchText.toLowerCase()) ||
-    p.category.toLowerCase().includes(this.searchText.toLowerCase()) 
-  );
-}
+    return this.products.filter(p =>
+      p.name?.toLowerCase().includes(search) ||
+      p.code?.toLowerCase().includes(search) ||
+      p.category?.toLowerCase().includes(search) ||
+      p.taxType?.toLowerCase().includes(search)
+    );
+  }
 
-  
+  // 🔥 MÉTODO PARA MOSTRAR IVA
+  getTaxLabel(product: any): string {
+    if (product.taxType === 'GRAVADO') {
+      return `Gravado ${product.taxRate}%`;
+    }
+
+    if (product.taxType === 'EXENTO') {
+      return 'Exento';
+    }
+
+    if (product.taxType === 'EXCLUIDO') {
+      return 'Excluido';
+    }
+
+    return 'Sin definir';
+  }
 
   deleteProduct(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {

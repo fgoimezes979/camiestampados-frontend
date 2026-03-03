@@ -1,8 +1,6 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { CommonModule, NgIfContext } from '@angular/common';
-
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { JournalService } from '../../../services/accounting/journal.service';
-import { JournalEntry } from '../../../models/journal-entry.model';
 
 @Component({
   selector: 'app-journal-list',
@@ -10,12 +8,12 @@ import { JournalEntry } from '../../../models/journal-entry.model';
   imports: [CommonModule],
   templateUrl: './journal-list.component.html',
   styleUrls: ['./journal-list.component.css'],
-
+})
 export class JournalListComponent implements OnInit {
 
-  entries: JournalEntry[] = [];
+  entries: any[] = [];
+  groupedEntries: any[] = [];
   loading = true;
-noData: TemplateRef<NgIfContext<boolean>> | null | undefined;
 
   constructor(private journalService: JournalService) {}
 
@@ -24,16 +22,31 @@ noData: TemplateRef<NgIfContext<boolean>> | null | undefined;
   }
 
   loadEntries(): void {
-  this.journalService.getAll().subscribe({
+  this.journalService.getJournalReport().subscribe({
     next: (resp: any) => {
-      console.log('📘 RESPUESTA API 👉', resp);
-      this.entries = resp.entries;   // 👈 correcto para tu backend
+      const rows = resp.rows;
+
+      const grouped: any = {};
+
+      rows.forEach((row: any) => {
+        if (!grouped[row.journal_id]) {
+          grouped[row.journal_id] = {
+            journal_id: row.journal_id,
+            date: row.date,
+            description: row.description,
+            lines: []
+          };
+        }
+
+        grouped[row.journal_id].lines.push(row);
+      });
+
+      this.groupedEntries = Object.values(grouped);
       this.loading = false;
     },
-    error: (err) => {
-      console.error('❌ Error cargando asientos', err);
+    error: () => {
       this.loading = false;
-    },
+    }
   });
 }
 }

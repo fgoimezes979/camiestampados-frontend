@@ -49,17 +49,55 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label>Precio compra</label>
-                    <input type="number" class="form-control" formControlName="purchasePrice">
-                  </div>
+               <div class="row">
+  <div class="col-md-6 mb-3">
+    <label>Precio compra (Base)</label>
+    <input type="number" class="form-control" formControlName="purchasePrice">
+  </div>
 
-                  <div class="col-md-6 mb-3">
-                    <label>Precio venta</label>
-                    <input type="number" class="form-control" formControlName="salePrice">
-                  </div>
-                </div>
+  <div class="col-md-6 mb-3">
+    <label>Precio venta (Base)</label>
+    <input type="number" class="form-control" formControlName="salePrice">
+  </div>
+</div>
+
+<hr>
+
+<h5 class="mb-3 text-primary">Configuración Fiscal (IVA)</h5>
+
+<div class="row">
+
+  <!-- Tipo IVA -->
+  <div class="col-md-6 mb-3">
+    <label>Tipo de IVA</label>
+    <select 
+      class="form-control"
+      formControlName="taxType"
+      (change)="onTaxTypeChange()">
+
+      <option value="GRAVADO">Gravado</option>
+      <option value="EXENTO">Exento</option>
+      <option value="EXCLUIDO">Excluido</option>
+
+    </select>
+  </div>
+
+  <!-- Tarifa IVA -->
+  <div 
+    class="col-md-6 mb-3"
+    *ngIf="productForm.get('taxType')?.value === 'GRAVADO'">
+
+    <label>Tarifa IVA (%)</label>
+    <input 
+      type="number"
+      class="form-control"
+      formControlName="taxRate"
+      min="0"
+      step="0.01">
+
+  </div>
+
+</div>
 
                 <!-- Proveedor -->
                 <div class="form-group mb-3">

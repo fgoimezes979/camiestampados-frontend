@@ -1,4 +1,5 @@
 export interface JournalEntry {
+account_code: any;
 credit: any;
 debit: any;
 accountName: any;

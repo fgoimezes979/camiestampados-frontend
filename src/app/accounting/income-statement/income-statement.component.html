@@ -1,0 +1,56 @@
+<h3 class="mb-4 text-center fw-bold">Estado de Resultados</h3>
+
+<div *ngIf="loading">Cargando...</div>
+
+<div *ngIf="!loading">
+
+  <h5>Ingresos</h5>
+  <div *ngFor="let i of data.ingresos">
+    {{ i.name }} -
+    {{ (i.total_credit || 0) | currency:'COP':'symbol':'1.0-0' }}
+  </div>
+
+  <p class="fw-bold">
+    Total Ingresos:
+    {{ data.totalIngresos | currency:'COP':'symbol':'1.0-0' }}
+  </p>
+
+  <hr>
+
+  <h5>Costos</h5>
+  <div *ngFor="let c of data.costos">
+    {{ c.name }} -
+    {{ (c.total_debit || 0) | currency:'COP':'symbol':'1.0-0' }}
+  </div>
+
+  <p class="fw-bold">
+    Total Costos:
+    {{ data.totalCostos | currency:'COP':'symbol':'1.0-0' }}
+  </p>
+
+  <hr>
+
+  <h5>Gastos</h5>
+  <div *ngFor="let g of data.gastos">
+    {{ g.name }} -
+    {{ (g.total_debit || 0) | currency:'COP':'symbol':'1.0-0' }}
+  </div>
+
+  <p class="fw-bold">
+    Total Gastos:
+    {{ data.totalGastos | currency:'COP':'symbol':'1.0-0' }}
+  </p>
+
+  <hr>
+
+  <h4 class="text-success" *ngIf="data.utilidad >= 0">
+    Utilidad:
+    {{ data.utilidad | currency:'COP':'symbol':'1.0-0' }}
+  </h4>
+
+  <h4 class="text-danger" *ngIf="data.utilidad < 0">
+    Pérdida:
+    {{ data.utilidad | currency:'COP':'symbol':'1.0-0' }}
+  </h4>
+
+</div>

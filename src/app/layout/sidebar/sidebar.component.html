@@ -140,16 +140,31 @@
         </li>
 
         <!-- Reportes -->
-       <li class="nav-item">
-  <a [routerLink]="['/reports/list']" class="nav-link">
+<li class="nav-item">
+  <a routerLink="/accounting/reportes/list" class="nav-link">
     <i class="fas fa-file-alt nav-icon"></i>
     <p>Reportes</p>
   </a>
 </li>
+
 <li class="nav-item">
-  <a [routerLink]="['/reports/create']" class="nav-link">
-    <i class="fas fa-plus-circle nav-icon"></i>
-    <p>Nuevo reporte</p>
+  <a routerLink="/trial-balance" class="nav-link">
+    <i class="fas fa-balance-scale nav-icon"></i>
+    <p>Balance de Prueba</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a routerLink="/income-statement" class="nav-link">
+    <i class="fas fa-chart-line nav-icon"></i>
+    <p>Estado de Resultados</p>
+  </a>
+</li>
+
+<li class="nav-item">
+  <a routerLink="/balance-sheet" class="nav-link">
+    <i class="fas fa-balance-scale nav-icon"></i>
+    <p>Balance General</p>
   </a>
 </li>
 

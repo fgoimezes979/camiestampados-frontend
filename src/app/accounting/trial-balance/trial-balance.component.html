@@ -1,0 +1,64 @@
+<h3 class="mb-4 text-center fw-bold">
+  Balance de Prueba
+</h3>
+
+<div *ngIf="loading" class="text-center">
+  <p>Cargando...</p>
+</div>
+
+<table *ngIf="!loading" class="table table-bordered table-striped table-hover">
+
+  <thead class="table-dark">
+    <tr>
+      <th>Código</th>
+      <th>Cuenta</th>
+      <th class="text-end">Debe</th>
+      <th class="text-end">Haber</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let r of rows">
+      <td>{{ r.code }}</td>
+      <td>{{ r.name }}</td>
+
+      <td class="text-end">
+        {{ (r.total_debit || 0) | currency:'COP':'symbol':'1.0-0' }}
+      </td>
+
+      <td class="text-end">
+        {{ (r.total_credit || 0) | currency:'COP':'symbol':'1.0-0' }}
+      </td>
+    </tr>
+
+    <!-- Totales -->
+    <tr class="fw-bold table-secondary">
+      <td colspan="2" class="text-end">TOTAL</td>
+
+      <td class="text-end">
+        {{ (totalDebit || 0) | currency:'COP':'symbol':'1.0-0' }}
+      </td>
+
+      <td class="text-end">
+        {{ (totalCredit || 0) | currency:'COP':'symbol':'1.0-0' }}
+      </td>
+    </tr>
+
+    <!-- Validación -->
+    <tr *ngIf="difference !== 0" class="text-danger fw-bold">
+      <td colspan="4" class="text-center">
+        ⚠️ El balance NO cuadra
+        (Diferencia:
+        {{ (difference || 0) | currency:'COP':'symbol':'1.0-0' }})
+      </td>
+    </tr>
+
+    <tr *ngIf="difference === 0" class="text-success fw-bold">
+      <td colspan="4" class="text-center">
+        ✔️ Balance cuadrado correctamente
+      </td>
+    </tr>
+
+  </tbody>
+</table>

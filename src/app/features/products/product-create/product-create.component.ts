@@ -18,7 +18,7 @@ export class ProductCreateComponent implements OnInit {
   suppliers: any[] = [];
   locations: any[] = [];
 
-  // ✅ IMÁGENES VAN AQUÍ (NO en el FormGroup)
+  // ✅ IMÁGENES
   images: string[] = [
     'assets/img/prod-1.jpg',
     'assets/img/prod-2.jpg',
@@ -32,23 +32,27 @@ export class ProductCreateComponent implements OnInit {
     private http: HttpClient,
     private supplierService: SupplierService
   ) {
+
+    // 🔥 AQUÍ VAN taxType y taxRate
     this.productForm = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
-      quantity: [0, [Validators.required, Validators.min(1)]],
+      quantity: [0, [Validators.required, Validators.min(0)]],
       purchasePrice: [0, [Validators.required, Validators.min(0)]],
       salePrice: [0, [Validators.required, Validators.min(0)]],
       supplierId: ['', Validators.required],
       locationId: ['', Validators.required],
-
-      // ✅ CONTROL PARA LA IMAGEN
       image: [''],
+      isActive: [true],
 
-      isActive: [true]
+      // ✅ NUEVOS CAMPOS IVA
+      taxType: ['GRAVADO', Validators.required],
+      taxRate: [19]
     });
   }
 
   ngOnInit(): void {
+
     this.supplierService.getAllSuppliers().subscribe({
       next: (data) => this.suppliers = data,
       error: (err) => console.error('❌ Error cargando proveedores:', err)
@@ -61,13 +65,24 @@ export class ProductCreateComponent implements OnInit {
       });
   }
 
-  // ✅ MÉTODO CORRECTO
   selectImage(img: string): void {
     this.productForm.patchValue({ image: img });
   }
 
+  onTaxTypeChange(): void {
+    const taxType = this.productForm.get('taxType')?.value;
+
+    if (taxType !== 'GRAVADO') {
+      this.productForm.patchValue({ taxRate: 0 });
+    } else {
+      this.productForm.patchValue({ taxRate: 19 });
+    }
+  }
+
   onSubmit(): void {
+
     if (this.productForm.valid) {
+
       const formValue = this.productForm.value;
 
       const payload = {
@@ -77,8 +92,14 @@ export class ProductCreateComponent implements OnInit {
         purchasePrice: formValue.purchasePrice,
         salePrice: formValue.salePrice,
         supplierId: Number(formValue.supplierId) || null,
+        locationId: Number(formValue.locationId) || null,
         image: formValue.image,
         isActive: formValue.isActive,
+
+        // 🔥 ENVIAMOS IVA AL BACKEND
+        taxType: formValue.taxType,
+        taxRate: formValue.taxRate,
+
         user_creates_id: 1
       };
 
@@ -88,11 +109,14 @@ export class ProductCreateComponent implements OnInit {
         .subscribe({
           next: () => {
             alert('Producto creado con éxito');
+
             this.productForm.reset({
               quantity: 0,
               purchasePrice: 0,
               salePrice: 0,
-              isActive: true
+              isActive: true,
+              taxType: 'GRAVADO',
+              taxRate: 19
             });
           },
           error: () => alert('Error al crear producto')
