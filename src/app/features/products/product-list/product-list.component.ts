@@ -34,6 +34,7 @@ export class ProductListComponent implements OnInit {
       // 🔥 Normalizamos nombres de campos
       this.products = rawProducts.map((p: any) => ({
         ...p,
+        stock: p.quantity ?? p.stock ?? 0,
         taxType: p.taxType ?? p.tax_type ?? null,
         taxRate: p.taxRate ?? p.tax_rate ?? 0
       }));

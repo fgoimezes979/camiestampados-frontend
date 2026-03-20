@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   imports: [ReactiveFormsModule, CommonModule, FormsModule]
 })
 export class LoginComponent implements OnInit {
+
   loginForm!: FormGroup;
 
   constructor(
@@ -22,40 +23,55 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
 
-      this.http.post<any>('http://localhost:4040/api/security/users/login', { email, password }).subscribe({
-      next: (res:any) => {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
 
-  console.log("RESPUESTA LOGIN:", res);
+    const { email, password } = this.loginForm.value;
 
-  const token = res.token;
+    this.http.post<any>('http://localhost:4040/api/security/users/login', { email, password })
+      .subscribe({
 
-  if(token){
-    localStorage.setItem("token", token);
-    console.log("TOKEN GUARDADO:", token);
-    this.router.navigate(['/dashboard']);
-  }else{
-    alert("No se recibió token");
-  }
+        next: (res: any) => {
 
-},
+          console.log("RESPUESTA LOGIN:", res);
+
+          if (res.token) {
+
+            // guardar token
+            localStorage.setItem("token", res.token);
+
+            // guardar usuario
+            if (res.user) {
+              localStorage.setItem("user", JSON.stringify(res.user));
+              console.log("USUARIO GUARDADO:", res.user);
+            }
+
+            this.router.navigate(['/dashboard']);
+
+          } else {
+            alert("No se recibió token");
+          }
+
+        },
 
         error: () => {
           alert('Correo o contraseña incorrectos');
         }
+
       });
-    } else {
-      this.loginForm.markAllAsTouched(); // ✅ Marca los campos para mostrar errores
-    }
+
   }
+
 }

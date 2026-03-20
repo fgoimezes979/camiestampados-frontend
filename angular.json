@@ -19,13 +19,15 @@
             "polyfills": [
               "zone.js"
             ],
-            "tsConfig": "tsconfig.app.json",
+             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+  "src/favicon.ico",
+  "src/assets",
+  {
+    "glob": "**/*",
+    "input": "public"
+  }
+],
             "styles": [
   "src/styles.css",
   "src/assets/themes/adminlte/plugins/fontawesome-free/css/all.min.css",

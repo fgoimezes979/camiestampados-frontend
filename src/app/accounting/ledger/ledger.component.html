@@ -1,0 +1,85 @@
+<div class="container mt-4">
+
+<h2>Libro Mayor</h2>
+
+<div class="row mb-3">
+
+  <!-- CUENTA -->
+  <div class="col-md-4">
+    <label>Cuenta</label>
+    <select class="form-control" [(ngModel)]="accountId">
+      <option value="">Seleccione cuenta</option>
+
+      <option *ngFor="let acc of accounts" [value]="acc.id">
+        {{ acc.code }} - {{ acc.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- DESDE -->
+  <div class="col-md-3">
+    <label>Desde</label>
+    <input type="date" class="form-control" [(ngModel)]="from">
+  </div>
+
+  <!-- HASTA -->
+  <div class="col-md-3">
+    <label>Hasta</label>
+    <input type="date" class="form-control" [(ngModel)]="to">
+  </div>
+
+  <!-- BOTÓN -->
+  <div class="col-md-2 d-flex align-items-end">
+    <button class="btn btn-primary w-100" (click)="loadLedger()">
+      Consultar
+    </button>
+  </div>
+
+</div>
+
+
+<table class="table table-bordered table-sm">
+
+<thead class="table-dark">
+<tr>
+<th>Fecha</th>
+<th>Descripción</th>
+<th>Débito</th>
+<th>Crédito</th>
+<th>Saldo</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td colspan="4"><b>Saldo inicial</b></td>
+<td>{{ openingBalance | number }}</td>
+</tr>
+
+<tr *ngFor="let row of ledger">
+
+<td>{{ row.date }}</td>
+<td>{{ row.description }}</td>
+<td>{{ row.debit | number }}</td>
+<td>{{ row.credit | number }}</td>
+<td>{{ row.balance | number }}</td>
+
+</tr>
+
+</tbody>
+
+<tfoot class="table-secondary">
+
+<tr>
+<td colspan="2"><b>Totales</b></td>
+<td>{{ totalDebit | number }}</td>
+<td>{{ totalCredit | number }}</td>
+<td>{{ closingBalance | number }}</td>
+</tr>
+
+</tfoot>
+
+</table>
+
+</div>

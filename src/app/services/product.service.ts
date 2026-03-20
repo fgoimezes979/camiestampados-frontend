@@ -6,37 +6,51 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductService {
-  getAll() {
-    throw new Error('Method not implemented.');
-  }
 
-  // URL base plural correcta
   private apiUrl = 'http://localhost:4040/api/parameters/products';
+  private supplierUrl = 'http://localhost:4040/api/parameters/suppliers';
+  private locationUrl = 'http://localhost:4040/api/parameters/locations';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  // Obtener todos los productos
+  // 🔹 Obtener todos los productos
   getAllProducts(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
 
-  // Obtener un producto por su ID
+  // 🔹 Obtener producto por ID
   getProductById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  // Crear un producto
+  // 🔹 Crear producto
   createProduct(productData: any): Observable<any> {
     return this.http.post(this.apiUrl, productData);
   }
 
-  // Actualizar un producto por ID
+  // 🔹 Actualizar producto
   updateProduct(id: number, productData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, productData);
   }
 
-  // Eliminar un producto por ID
+  // 🔹 Eliminar producto
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  // 🔹 Obtener proveedores
+  getSuppliers(): Observable<any> {
+    return this.http.get(this.supplierUrl);
+  }
+
+  // 🔹 Obtener ubicaciones
+  getLocations(): Observable<any> {
+    return this.http.get(this.locationUrl);
+  }
+
+  // 🔹 Obtener productos por ubicación
+  getProductsByLocation(location_id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/location/${location_id}`);
+  }
+
 }

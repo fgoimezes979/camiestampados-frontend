@@ -29,16 +29,32 @@
                 </div>
 
                 <!-- Categoría -->
-                <div class="form-group mb-3">
-                  <label>Categoría</label>
-                  <input class="form-control" formControlName="category">
-                </div>
+                <label>Categoría</label>
+
+<select formControlName="category_id" class="form-control">
+
+<option value="">Seleccione categoría</option>
+
+<option *ngFor="let c of categories" [value]="c.id">
+ {{c.name}}
+</option>
+
+</select>
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label>Cantidad</label>
                     <input type="number" class="form-control" formControlName="quantity">
                   </div>
+
+                  <div class="col-md-4 mb-3">
+    <label>Stock mínimo</label>
+    <input
+      type="number"
+      class="form-control"
+      formControlName="minimum_stock"
+      min="0">
+  </div>
 
                   <div class="col-md-6 mb-3">
                     <label>Estado</label>

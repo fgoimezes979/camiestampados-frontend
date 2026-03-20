@@ -76,11 +76,11 @@
   </td>
 
   <!-- 🔥 STOCK -->
-  <td class="text-center">
-    <span class="badge badge-primary px-2 py-1">
-      {{ product.quantity }}
-    </span>
-  </td>
+ <td class="text-center">
+  <span class="badge badge-primary px-2 py-1" [title]="'Total en todas las ubicaciones'">
+    {{ product.quantity || 0 }}
+  </span>
+</td>
 
   <!-- 🔥 COMPRA BASE -->
   <td class="text-center">

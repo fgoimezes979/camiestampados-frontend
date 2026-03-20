@@ -1,46 +1,149 @@
-<div class="p-6 space-y-8">
+<div class="dashboard">
 
-  <!-- KPIs -->
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-    <div class="card bg-blue-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-      <h3 class="text-lg font-semibold text-blue-700 flex items-center justify-center">
-        <i class="fas fa-boxes mr-2"></i> Productos Distintos
-      </h3>
-      <p class="text-3xl font-bold mt-2">{{ totalProducts }}</p>
-      <span class="text-sm text-blue-600">+5% desde el mes pasado</span>
-    </div>
-
-    <div class="card bg-indigo-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-      <h3 class="text-lg font-semibold text-indigo-700 flex items-center justify-center">
-        <i class="fas fa-cubes mr-2"></i> Unidades en Inventario
-      </h3>
-      <p class="text-3xl font-bold mt-2">{{ totalUnidades }}</p>
-      <span class="text-sm text-indigo-600">+2% desde el mes pasado</span>
-    </div>
-
-    <div class="card bg-green-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-      <h3 class="text-lg font-semibold text-green-700 flex items-center justify-center">
-        <i class="fas fa-truck mr-2"></i> Total Proveedores
-      </h3>
-      <p class="text-3xl font-bold mt-2">{{ totalSuppliers }}</p>
-      <span class="text-sm text-green-600">0 cambios este mes</span>
-    </div>
-
-    <div class="card bg-yellow-100 p-6 rounded-xl shadow text-center transform transition-transform duration-200 hover:scale-105 hover:shadow-xl">
-      <h3 class="text-lg font-semibold text-yellow-700 flex items-center justify-center">
-        <i class="fas fa-file-invoice mr-2"></i> Órdenes Pendientes
-      </h3>
-      <p class="text-3xl font-bold mt-2">{{ pendingOrders }}</p>
-      <span class="text-sm text-yellow-700">-1 desde ayer</span>
-    </div>
+  <!-- Título -->
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p>Resumen general del sistema</p>
   </div>
 
-  <!-- Gráfico de ventas -->
-  <div class="bg-white p-6 rounded-2xl shadow-lg">
-    <h3 class="text-xl font-bold mb-4 text-gray-700 flex items-center">
-      <i class="fas fa-chart-line mr-2"></i> Ventas del Mes
-    </h3>
-    <canvas id="ventasChart" class="w-full h-40"></canvas>
+  <!-- KPIs -->
+  <div class="kpi-grid">
+
+    <div class="kpi-card blue">
+      <div class="kpi-icon">
+        <i class="fas fa-boxes"></i>
+      </div>
+      <div>
+
+        <span>Productos</span>
+        <h2>{{ totalProducts }}</h2>
+      </div>
+    </div>
+
+    <div class="kpi-card indigo">
+      <div class="kpi-icon">
+        <i class="fas fa-cubes"></i>
+      </div>
+      <div>
+        <span>Inventario</span>
+        <h2>{{ totalUnidades }}</h2>
+      </div>
+    </div>
+
+    <div class="kpi-card purple">
+  <div class="kpi-icon">
+    <i class="fas fa-coins"></i>
+  </div>
+
+  <div>
+    <span>Valor inventario</span>
+    <h2>{{ totalInventoryValue | currency:'COP':'symbol':'1.0-0' }}</h2>
+  </div>
+</div>
+
+<div class="kpi-card red">
+  <div class="kpi-icon">
+    <i class="fas fa-exclamation-triangle"></i>
+  </div>
+
+  <div>
+    <span>Stock bajo</span>
+    <h2>{{ lowStockProducts }}</h2>
+  </div>
+
+  
+</div>
+
+<div class="kpi-card green">
+  <span>Ventas dia</span>
+  <h2>{{ salesToday | currency:'COP':'symbol':'1.0-0' }}</h2>
+</div>
+
+    <div class="kpi-card green">
+      <div class="kpi-icon">
+        <i class="fas fa-truck"></i>
+      </div>
+      <div>
+        <span>Proveedores</span>
+        <h2>{{ totalSuppliers }}</h2>
+      </div>
+    </div>
+
+    <div class="kpi-card yellow">
+      <div class="kpi-icon">
+        <i class="fas fa-receipt"></i>
+      </div>
+      <div>
+        <span>Órdenes</span>
+        <h2>{{ pendingOrders }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sección de gráficos -->
+  <div class="dashboard-grid">
+
+    <!-- Ventas -->
+    <div class="card">
+      <h3>Ventas del mes</h3>
+      <canvas #ventasChart></canvas>
+    </div>
+
+    <!-- Productos más vendidos -->
+    <div class="card">
+      <h3>Productos más vendidos</h3>
+      <canvas #productosChart></canvas>
+    </div>
+
+
+    <div class="card">
+  <h3>Alertas de inventario</h3>
+  <canvas id="stockChart"></canvas>
+</div>
+
+    <!-- Inventario por ubicación -->
+    <div class="card">
+      <h3>Inventario por ubicación</h3>
+      <canvas #inventarioChart height="150"></canvas>
+    </div>
+
+    <!-- Últimas órdenes -->
+    <div class="card">
+      <h3>Últimas órdenes</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+         <tr *ngFor="let order of lastOrders">
+  <td>{{ order.id }}</td>
+  <td>{{ order.client?.name }}</td>
+
+  <td>
+    <span class="status"
+          [ngClass]="{
+            'pending': order.state === 'PENDING',
+            'paid': order.state === 'PAID',
+            'cancelled': order.state === 'CANCELLED'
+          }">
+      {{ order.state }}
+    </span>
+  </td>
+
+</tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
   </div>
 
 </div>

@@ -7,6 +7,9 @@ import { Location } from '../models/location.model'; // ✅ USAR EL MODEL
   providedIn: 'root'
 })
 export class LocationService {
+  getLocations() {
+    throw new Error('Method not implemented.');
+  }
 
   private apiUrl = 'http://localhost:4040/api/parameters/locations';
 

@@ -312,6 +312,13 @@ export const routes: Routes = [
     loadComponent: () => import('./features/clients-management/client-show/client-show.component').then(c => c.ClientShowComponent),
     canActivate: [AuthGuard]
   },
+
+  {
+    path: 'categories',
+    loadComponent: () => import('./features/categories/category-list/category-list.component')
+    .then(c => c.CategoryListComponent),
+    canActivate: [AuthGuard]
+  },
   {
   path: 'accounting',
   children: ACCOUNTING_ROUTES,
@@ -340,6 +347,21 @@ export const routes: Routes = [
       .then(m => m.BalanceSheetComponent),
   canActivate: [AuthGuard]
 },
+
+{
+  path: 'accounting/ledger',
+  loadComponent: () =>
+    import('./accounting/ledger/ledger.component')
+      .then(m => m.LedgerComponent)
+},
+
+{
+    path: 'pos',
+    loadComponent: () =>
+      import('./features/invoices/pos/pos.component')
+        .then(m => m.PosComponent)
+  },
+
 
 
 {

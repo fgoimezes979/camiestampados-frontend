@@ -46,6 +46,14 @@ export const ACCOUNTING_ROUTES: Routes = [
     loadChildren: () =>
       import('./../features/reports/report.routes')
         .then(c => c.REPORTS_ROUTES)
+  },
+
+  {
+    path: 'ledger',   // 👈 NUEVA RUTA
+    loadComponent: () =>
+      import('./ledger/ledger.component')
+        .then(c => c.LedgerComponent)
   }
+
 
 ];

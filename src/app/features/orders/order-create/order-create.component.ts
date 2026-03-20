@@ -12,14 +12,20 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./order-create.component.css']
 })
 export class OrderCreateComponent implements OnInit {
+
   orderForm: FormGroup;
+
   clients: any[] = [];
   products: any[] = [];
   locations: any[] = [];
   orders: any[] = [];
 
-  selectedProducts: any[] = []; // Productos agregados temporalmente
+  selectedProducts: any[] = [];
+
   private readonly apiUrl = 'http://localhost:4040/api/parameters';
+
+  // 👇 cliente por defecto (AJUSTA ESTE ID)
+  private defaultClientId = 4;
 
   constructor(
     private fb: FormBuilder,
@@ -27,11 +33,10 @@ export class OrderCreateComponent implements OnInit {
     private router: Router
   ) {
 
-    // Formulario principal
-    this.orderForm= this.fb.group({
+    this.orderForm = this.fb.group({
       date: [new Date().toISOString().substring(0, 10), Validators.required],
-      client_id: [null, Validators.required],
-      due_date: [null, Validators.required], // ← nuevo campo
+      client_id: [this.defaultClientId, Validators.required], // ✅ nunca null
+      due_date: [null, Validators.required],
       location_id: [null, Validators.required],
       state: ['PENDING', Validators.required],
       user_creates_id: [1],
@@ -47,8 +52,11 @@ export class OrderCreateComponent implements OnInit {
     this.loadOrders();
   }
 
-  // --- Agregar producto a la lista ---
+  // =============================
+  // AGREGAR PRODUCTO
+  // =============================
   addProduct(): void {
+
     const { quantity, product_id } = this.orderForm.value;
 
     if (!product_id || quantity <= 0) {
@@ -57,12 +65,13 @@ export class OrderCreateComponent implements OnInit {
     }
 
     const product = this.products.find(p => p.id === product_id);
+
     if (!product) {
       alert('Producto no encontrado');
       return;
     }
 
-    const unit_price = parseFloat(product.sale_price ?? product.saleprice ?? 0);
+    const unit_price = Number(product.sale_price ?? product.saleprice ?? 0);
     const total_price = unit_price * quantity;
 
     this.selectedProducts.push({
@@ -74,64 +83,73 @@ export class OrderCreateComponent implements OnInit {
       total_price
     });
 
-    // Reiniciar los campos del producto
     this.orderForm.patchValue({
-       
       product_id: null,
       quantity: 1
     });
   }
 
-  // --- Eliminar producto de la lista ---
+  // =============================
+  // ELIMINAR PRODUCTO
+  // =============================
   removeProduct(index: number): void {
     this.selectedProducts.splice(index, 1);
     this.selectedProducts = [...this.selectedProducts];
   }
 
-  // --- Calcular el total general ---
+  // =============================
+  // TOTAL
+  // =============================
   getTotalOrder(): number {
     return this.selectedProducts.reduce((sum, p) => sum + (p.total_price || 0), 0);
   }
 
-  // --- Confirmar y guardar orden ---
+  // =============================
+  // CREAR ORDEN
+  // =============================
   confirmOrder(): void {
+
     if (!this.orderForm.valid) {
       alert('Por favor completa todos los campos requeridos ❌');
       return;
     }
 
     if (!this.selectedProducts.length) {
-      alert('Debes agregar al menos un producto a la orden ❌');
+      alert('Debes agregar al menos un producto ❌');
       return;
     }
 
     const formData = this.orderForm.getRawValue();
-    const total_price = this.getTotalOrder();
 
-    // ✅ Ahora enviamos también el unit_price de cada producto
     const payload = {
-  date: formData.date,
-  client_id: formData.client_id,
-  location_id: Number(formData.location_id),
-  state: formData.state,
-  user_creates_id: formData.user_creates_id,
-  due_date: new Date(
-    new Date(formData.date).setDate(new Date(formData.date).getDate() + 7)
-  ).toISOString(),
+      date: formData.date,
 
-  // 👇 CAMBIO CLAVE
- products: this.selectedProducts.map(p => ({
-  product_id: p.product_id,
-  quantity: p.quantity,
-  unit_price: p.unit_price
-})),
+      // 🔥 BLINDADO
+      client_id: formData.client_id || this.defaultClientId,
 
-  total_price
-};
+      location_id: Number(formData.location_id),
+      state: formData.state,
+      user_creates_id: formData.user_creates_id,
+
+      due_date: new Date(
+        new Date(formData.date).setDate(new Date(formData.date).getDate() + 7)
+      ).toISOString(),
+
+      products: this.selectedProducts.map(p => ({
+        product_id: p.product_id,
+        quantity: p.quantity,
+        unit_price: p.unit_price
+      })),
+
+      total_price: this.getTotalOrder()
+    };
+
     console.log('🧾 Payload enviado:', payload);
 
     this.http.post(`${this.apiUrl}/orders`, payload).subscribe({
+
       next: (res: any) => {
+
         alert('Orden creada con éxito ✅');
 
         this.orders.push({
@@ -139,44 +157,60 @@ export class OrderCreateComponent implements OnInit {
           products: this.selectedProducts
         });
 
-        this.selectedProducts = [];
-        this.orderForm.reset({
-          date: new Date().toISOString().substring(0, 10),
-          client_id: null,
-          location_id: null,
-          state: 'PENDING',
-          user_creates_id: 1,
-          product_id: null,
-          quantity: 1
-        });
+        this.resetForm();
       },
+
       error: (err) => {
-        console.error('Error al crear orden ❌:', err);
-        alert(`Error al crear orden ❌: ${err.error?.message || err.message}`);
+
+        console.error('❌ Error al crear orden:', err);
+
+        alert(err?.error?.msg || 'Error al crear orden');
       }
+
     });
   }
 
-  // --- Cerrar y volver al listado ---
-  onClose(): void {
-    this.router.navigate(['/orders']);
+  // =============================
+  // RESET LIMPIO
+  // =============================
+  resetForm() {
+    this.selectedProducts = [];
+
+    this.orderForm.reset({
+      date: new Date().toISOString().substring(0, 10),
+      client_id: this.defaultClientId, // 🔥 nunca null
+      location_id: null,
+      state: 'PENDING',
+      user_creates_id: 1,
+      product_id: null,
+      quantity: 1
+    });
   }
 
-  // --- Cargar datos desde el backend ---
+  // =============================
+  // LOADERS
+  // =============================
   loadClients(): void {
     this.http.get(`${this.apiUrl}/clients`).subscribe((res: any) => {
       this.clients = res.clients || res;
+
+      // 🔥 autoasignar cliente si no hay
+      if (!this.orderForm.value.client_id && this.clients.length > 0) {
+        this.orderForm.patchValue({
+          client_id: this.clients[0].id
+        });
+      }
     });
   }
 
   loadProducts(): void {
     this.http.get(`${this.apiUrl}/products`).subscribe((res: any) => {
       const products = res.products || res;
+
       this.products = products.map((p: any) => ({
         ...p,
         sale_price: p.sale_price ?? p.salePrice ?? p.saleprice ?? 0
       }));
-      console.log('📦 Productos cargados:', this.products);
     });
   }
 
@@ -189,7 +223,13 @@ export class OrderCreateComponent implements OnInit {
   loadOrders(): void {
     this.http.get(`${this.apiUrl}/orders`).subscribe((res: any) => {
       this.orders = Array.isArray(res) ? res : res.orders || [];
-      console.log('📋 Órdenes cargadas:', this.orders);
     });
+  }
+
+  // =============================
+  // NAV
+  // =============================
+  onClose(): void {
+    this.router.navigate(['/orders']);
   }
 }

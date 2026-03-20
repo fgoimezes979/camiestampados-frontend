@@ -15,10 +15,12 @@ import { SupplierService } from '../../../services/supplier.service';
 export class ProductCreateComponent implements OnInit {
 
   productForm: FormGroup;
+
   suppliers: any[] = [];
   locations: any[] = [];
+  categories: any[] = []; // ✅ debe ser array
 
-  // ✅ IMÁGENES
+  // IMÁGENES
   images: string[] = [
     'assets/img/prod-1.jpg',
     'assets/img/prod-2.jpg',
@@ -33,11 +35,11 @@ export class ProductCreateComponent implements OnInit {
     private supplierService: SupplierService
   ) {
 
-    // 🔥 AQUÍ VAN taxType y taxRate
     this.productForm = this.fb.group({
       name: ['', Validators.required],
-      category: ['', Validators.required],
+      category_id: ['', Validators.required], // ✔ igual que la BD
       quantity: [0, [Validators.required, Validators.min(0)]],
+      minimum_stock: [0, [Validators.required, Validators.min(0)]],
       purchasePrice: [0, [Validators.required, Validators.min(0)]],
       salePrice: [0, [Validators.required, Validators.min(0)]],
       supplierId: ['', Validators.required],
@@ -45,7 +47,7 @@ export class ProductCreateComponent implements OnInit {
       image: [''],
       isActive: [true],
 
-      // ✅ NUEVOS CAMPOS IVA
+      // IVA
       taxType: ['GRAVADO', Validators.required],
       taxRate: [19]
     });
@@ -53,16 +55,28 @@ export class ProductCreateComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // ✅ CARGAR PROVEEDORES
     this.supplierService.getAllSuppliers().subscribe({
       next: (data) => this.suppliers = data,
-      error: (err) => console.error('❌ Error cargando proveedores:', err)
+      error: (err) => console.error('Error cargando proveedores:', err)
     });
 
+    // ✅ CARGAR UBICACIONES
     this.http.get<any>('http://localhost:4040/api/parameters/locations')
       .subscribe({
         next: (data) => this.locations = data.locations ?? data,
-        error: (err) => console.error('❌ Error cargando ubicaciones:', err)
+        error: (err) => console.error('Error cargando ubicaciones:', err)
       });
+
+    // ✅ CARGAR CATEGORÍAS
+    this.http.get<any>('http://localhost:4040/api/parameters/categories')
+      .subscribe({
+        next: (resp) => {
+          this.categories = resp.categories;
+        },
+        error: (err) => console.error('Error cargando categorías:', err)
+      });
+
   }
 
   selectImage(img: string): void {
@@ -70,13 +84,16 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onTaxTypeChange(): void {
+
     const taxType = this.productForm.get('taxType')?.value;
+    const currentRate = this.productForm.get('taxRate')?.value;
 
     if (taxType !== 'GRAVADO') {
       this.productForm.patchValue({ taxRate: 0 });
-    } else {
+    } else if (!currentRate) {
       this.productForm.patchValue({ taxRate: 19 });
     }
+
   }
 
   onSubmit(): void {
@@ -86,28 +103,27 @@ export class ProductCreateComponent implements OnInit {
       const formValue = this.productForm.value;
 
       const payload = {
-        name: formValue.name,
-        category: formValue.category,
-        quantity: formValue.quantity,
-        purchasePrice: formValue.purchasePrice,
-        salePrice: formValue.salePrice,
-        supplierId: Number(formValue.supplierId) || null,
-        locationId: Number(formValue.locationId) || null,
-        image: formValue.image,
-        isActive: formValue.isActive,
-
-        // 🔥 ENVIAMOS IVA AL BACKEND
-        taxType: formValue.taxType,
-        taxRate: formValue.taxRate,
-
-        user_creates_id: 1
-      };
+  name: formValue.name,
+  category_id: formValue.category_id, // ✅ CORREGIDO
+  quantity: formValue.quantity,
+  minimum_stock: formValue.minimum_stock,
+  purchasePrice: formValue.purchasePrice,
+  salePrice: formValue.salePrice,
+  supplierId: Number(formValue.supplierId) || null,
+  locationId: Number(formValue.locationId) || null,
+  image: formValue.image,
+  isActive: formValue.isActive,
+  taxType: formValue.taxType,
+  taxRate: formValue.taxRate,
+  user_creates_id: 1
+};
 
       console.log('Payload a enviar:', payload);
 
       this.http.post('http://localhost:4040/api/parameters/products', payload)
         .subscribe({
           next: () => {
+
             alert('Producto creado con éxito');
 
             this.productForm.reset({
@@ -118,6 +134,7 @@ export class ProductCreateComponent implements OnInit {
               taxType: 'GRAVADO',
               taxRate: 19
             });
+
           },
           error: () => alert('Error al crear producto')
         });

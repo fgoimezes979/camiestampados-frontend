@@ -1,0 +1,71 @@
+<div class="container mt-4">
+
+<h2>Categorías</h2>
+
+<div class="card p-3 mb-4">
+
+<h4>Nueva categoría</h4>
+
+<input
+type="text"
+class="form-control mb-2"
+placeholder="Nombre"
+[(ngModel)]="newCategory.name"
+/>
+
+<input
+type="text"
+class="form-control mb-2"
+placeholder="Descripción"
+[(ngModel)]="newCategory.description"
+/>
+
+<button
+class="btn btn-primary"
+(click)="createCategory()"
+>
+Crear categoría
+</button>
+
+</div>
+
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Descripción</th>
+<th>Acciones</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr *ngFor="let c of categories">
+
+<td>{{c.id}}</td>
+<td>{{c.name}}</td>
+<td>{{c.description}}</td>
+
+<td>
+
+<button
+class="btn btn-danger btn-sm"
+(click)="deleteCategory(c.id)"
+>
+Eliminar
+</button>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
