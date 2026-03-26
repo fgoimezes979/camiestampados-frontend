@@ -28,9 +28,9 @@
       <!-- Top actions -->
       <div class="d-flex justify-content-between flex-wrap mb-4">
 
-        <button class="btn btn-success btn-sm mb-2" (click)="abrirNuevaGestion()">
-          <i class="fas fa-plus"></i> Nueva Gestión
-        </button>
+       <button class="btn btn-success btn-sm mb-2" data-toggle="modal" data-target="#modalCrearGestion">
+  <i class="fas fa-plus"></i> Nueva Gestión
+</button>
 
         <input
           type="text"
@@ -117,6 +117,7 @@
               <td colspan="7" class="text-center text-muted">
                 No hay gestiones registradas.
               </td>
+              
             </tr>
 
           </tbody>
@@ -127,4 +128,47 @@
     </div>
   </div>
 
+</div>
+<div class="modal fade" id="modalCrearGestion" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title font-weight-bold">Registrar Nueva Gestión</h5>
+        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form #f="ngForm">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Cliente</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevaGestion.cliente_nombre" name="cliente" placeholder="Nombre del cliente" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Servicio / Pedido</label>
+              <input type="text" class="form-control" [(ngModel)]="nuevaGestion.descripcion" name="servicio" placeholder="Ej: 50 Camisetas o Cojín Lechona" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Monto Estimado</label>
+              <input type="number" class="form-control" [(ngModel)]="nuevaGestion.monto" name="monto">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Estado Inicial</label>
+              <select class="form-control" [(ngModel)]="nuevaGestion.estado" name="estado">
+                <option value="En curso">En curso</option>
+                <option value="Cerrado">Cerrado</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="guardarNuevaGestion()" [disabled]="!f.valid">
+          Guardar Gestión
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

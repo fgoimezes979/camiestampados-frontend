@@ -1,0 +1,68 @@
+<div class="dashboard-comercial container-fluid mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary font-weight-bold">Gestión Comercial de Clientes</h2>
+    <button class="btn btn-success shadow-sm" (click)="guardar()">
+      <i class="fas fa-save mr-2"></i>Guardar Cambios
+    </button>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light">
+          <tr>
+            <th class="text-center">#</th>
+            <th>Cliente</th>
+            <th>Negocio / Servicio</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Monto</th>
+            <th class="text-center">Último Contacto</th>
+            <th class="text-center">Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let g of gestiones; let i = index">
+            <td class="text-center font-weight-bold">{{ i + 1 }}</td>
+            
+            <td><strong>{{ g.cliente_nombre }}</strong></td>
+            
+            <td>{{ g.servicio }}</td>
+            
+            <td class="text-center">
+              <span class="badge p-2" [ngClass]="{
+                'badge-success': g.estado === 'Cerrado',
+                'badge-warning text-dark': g.estado === 'En curso',
+                'badge-danger': g.estado === 'Perdido'
+              }">
+                {{ g.estado }}
+              </span>
+            </td>
+
+            <td class="text-center font-weight-bold text-success">
+              {{ g.monto | currency:'COP':'symbol-narrow':'1.0-0' }}
+            </td>
+
+            <td class="text-center text-muted">
+              {{ g.fecha_contacto | date:'dd/MM/yyyy' }}
+            </td>
+
+            <td class="text-center">
+              <button (click)="verDetalle(g.id)" class="btn btn-sm btn-outline-info mr-1" title="Ver detalle">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button (click)="editarEstado(g.id)" class="btn btn-sm btn-outline-warning" title="Editar estado">
+                <i class="fas fa-edit"></i>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="gestiones.length === 0">
+            <td colspan="7" class="text-center py-4 text-muted">
+              No hay gestiones comerciales registradas.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

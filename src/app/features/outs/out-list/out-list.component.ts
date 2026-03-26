@@ -41,48 +41,42 @@ export class OutListComponent implements OnInit {
   }
 
   loadData(): void {
-    forkJoin({
-      products: this.productService.getAllProducts(),
-      locations: this.locationService.getAllLocations(),
-      outs: this.outService.getAllOuts()
-    }).subscribe({
-      next: ({ products, locations, outs }) => {
+  forkJoin({
+    products: this.productService.getAllProducts(),
+    locations: this.locationService.getAllLocations(),
+    outs: this.outService.getAllOuts()
+  }).subscribe({
+    next: (res: any) => {
+      // 1. Extraer catálogos base (manejando si vienen envueltos en un objeto)
+      const listProducts = Array.isArray(res.products) ? res.products : (res.products?.products || []);
+      const listLocations = Array.isArray(res.locations) ? res.locations : (res.locations?.locations || []);
+      
+      this.products = listProducts;
+      this.locations = listLocations;
 
-        this.products = Array.isArray(products) ? products : [];
-        this.locations = Array.isArray(locations) ? locations : [];
+      // 2. EXTRAER EL ARRAY DE SALIDAS (Aquí estaba el detalle)
+      // Si el backend envía { status: true, outs: [] }, res.outs es el objeto, res.outs.outs es el array
+      const rawOuts = res.outs && Array.isArray(res.outs.outs) ? res.outs.outs : (Array.isArray(res.outs) ? res.outs : []);
 
-        const rawOuts = Array.isArray(outs) ? outs : [];
+      this.outs = rawOuts.map((out: any) => {
+        // Buscamos el producto en la lista cargada por si el include del backend falla
+        const foundProduct = listProducts.find((p: any) => +p.id === +out.product_id);
+        const foundLocation = listLocations.find((l: any) => +l.id === +out.location_id);
 
-        this.outs = rawOuts.map((out: any) => {
-          const prod = out.product ?? this.products.find(p => +p.id === +out.product_id);
-          const loc  = out.location ?? this.locations.find(l => +l.id === +out.location_id);
+        return {
+          ...out,
+          // Priorizamos lo que venga del backend, si no, usamos lo que encontramos localmente
+          product: out.product || (foundProduct ? { name: foundProduct.name } : { name: 'N/A' }),
+          location: out.location || (foundLocation ? { name: foundLocation.name } : { name: 'N/A' }),
+          // Normalizamos nombres de variables para el HTML
+          salePrice: out.salePrice || out.saleprice || 0,
+          totalPrice: out.totalPrice || out.totalprice || 0
+        };
+      });
 
-          return {
-            id: out.id,
-            code_product: out.code_product,
-            product_id: +out.product_id,
-
-            // 👇 OBJETO product (correcto)
-            product: prod ? { id: prod.id, name: prod.name } : undefined,
-
-            // 👇 OBJETO location (correcto)
-            location: loc ? { id: loc.id, name: loc.name } : undefined,
-
-            date: out.date ?? null,
-            client: out.client ?? null,
-            user: out.user ?? null,
-            quantity: out.quantity ?? 0,
-
-            salePrice: prod?.salePrice ?? 0,
-            totalPrice: out.totalPrice ?? ((prod?.salePrice ?? 0) * (out.quantity ?? 0)),
-
-            balance: out.balance ?? null
-          } as Out;
-        });
-
-        console.log('📌 Outs cargados:', this.outs);
-      },
-      error: (err: any) => console.error('❌ Error cargando datos:', err)
-    });
-  }
+      console.log('✅ Salidas listas para la tabla:', this.outs);
+    },
+    error: (err) => console.error('❌ Error en la carga:', err)
+  });
+}
 }
