@@ -36,7 +36,7 @@ throw new Error('Method not implemented.');
   // =========================
   loadEntries() {
     this.loading = true;
-    this.http.get<any>('http://localhost:4040/api/parameters/entries')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/entries')
       .subscribe({
         next: res => {
           this.entries = res.entries || res;
@@ -69,7 +69,7 @@ getTotal(entry: any): number {
   deleteEntry(id: number) {
     if (!confirm('¿Está seguro de eliminar esta entrada?')) return;
 
-    this.http.delete(`http://localhost:4040/api/parameters/entries/${id}`)
+    this.http.delete(`https://inventarios-adso-api.onrender.com/api/parameters/entries/${id}`)
       .subscribe({
         next: () => {
           alert('Entrada eliminada ✅');

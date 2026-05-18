@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 })
 export class OrderService {
 
-  private apiUrl = 'http://localhost:4040/api/parameters/orders';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/orders';
 
   constructor(private http: HttpClient) {}
 
@@ -64,7 +64,7 @@ export class OrderService {
   // CLIENTES PARA FACTURACIÓN
   // =============================
   getClients(): Observable<any> {
-    const apiClientsUrl = 'http://localhost:4040/api/parameters/clients';
+    const apiClientsUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/clients';
 
     return this.http.get(apiClientsUrl).pipe(
       map((res: any) => res.clients || res)

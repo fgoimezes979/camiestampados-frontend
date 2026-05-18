@@ -8,7 +8,7 @@ import { Entry } from '../models/entry.model';
 })
 export class EntryService {
 
-  private apiUrl = 'http://localhost:4040/api/parameters/entries';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/entries';
 
   constructor(private http: HttpClient) {}
 

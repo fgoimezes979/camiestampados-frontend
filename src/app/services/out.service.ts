@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class OutService {
-  private apiUrl = 'http://localhost:4040/api/parameters/outs';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/outs';
 
   constructor(private http: HttpClient) {}
 

@@ -46,7 +46,7 @@ export class LocationCreateComponent {
 
     console.log('📤 Payload enviado:', payload);
 
-    this.http.post('http://localhost:4040/api/parameters/locations', payload)
+    this.http.post('https://inventarios-adso-api.onrender.com/api/parameters/locations', payload)
       .subscribe({
         next: (res: any) => {
           console.log('Ubicación creada:', res);

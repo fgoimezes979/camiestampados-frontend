@@ -91,21 +91,21 @@ export class EntryCreateComponent implements OnInit {
   // 📦 CARGAR DATOS
   // =========================
   loadProducts() {
-    this.http.get<any>('http://localhost:4040/api/parameters/products')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/products')
       .subscribe(res => {
         this.products = res.products || res;
       });
   }
 
   loadLocations() {
-    this.http.get<any>('http://localhost:4040/api/parameters/locations')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/locations')
       .subscribe(res => {
         this.locations = res.locations || res;
       });
   }
 
   loadSuppliers() {
-    this.http.get<any>('http://localhost:4040/api/parameters/suppliers')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/suppliers')
       .subscribe(res => {
         this.suppliers = res.suppliers || res;
       });
@@ -190,7 +190,7 @@ export class EntryCreateComponent implements OnInit {
 
     console.log("📌 Payload enviado:", payload);
 
-    this.http.post('http://localhost:4040/api/parameters/entries', payload)
+    this.http.post('https://inventarios-adso-api.onrender.com/api/parameters/entries', payload)
       .subscribe({
         next: () => {
           alert("Entrada creada correctamente ✅");

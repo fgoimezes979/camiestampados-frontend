@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SupplierService {
-  private apiUrl = 'http://localhost:4040/api/parameters/suppliers'; // ✅ corregido a plural
+ private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/suppliers';
 
   constructor(private http: HttpClient) {}
 

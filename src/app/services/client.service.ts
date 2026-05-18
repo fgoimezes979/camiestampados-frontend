@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrl = 'http://localhost:4040/api/parameters/clients'; // ✅ corregido a plural
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/clients';
 
   constructor(private http: HttpClient) {}
 

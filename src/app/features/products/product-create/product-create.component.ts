@@ -62,14 +62,14 @@ export class ProductCreateComponent implements OnInit {
     });
 
     // ✅ CARGAR UBICACIONES
-    this.http.get<any>('http://localhost:4040/api/parameters/locations')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/locations')
       .subscribe({
         next: (data) => this.locations = data.locations ?? data,
         error: (err) => console.error('Error cargando ubicaciones:', err)
       });
 
     // ✅ CARGAR CATEGORÍAS
-    this.http.get<any>('http://localhost:4040/api/parameters/categories')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/parameters/categories')
       .subscribe({
         next: (resp) => {
           this.categories = resp.categories;
@@ -120,7 +120,7 @@ export class ProductCreateComponent implements OnInit {
 
       console.log('Payload a enviar:', payload);
 
-      this.http.post('http://localhost:4040/api/parameters/products', payload)
+      this.http.post('https://inventarios-adso-api.onrender.com/api/parameters/products', payload)
         .subscribe({
           next: () => {
 

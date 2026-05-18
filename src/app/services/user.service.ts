@@ -6,7 +6,7 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:4040/api/security/users'; // ✅ plural
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/security/users';
 
   constructor(private http: HttpClient) {}
 

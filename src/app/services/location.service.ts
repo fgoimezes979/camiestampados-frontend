@@ -10,8 +10,7 @@ export class LocationService {
   getLocations() {
     throw new Error('Method not implemented.');
   }
-
-  private apiUrl = 'http://localhost:4040/api/parameters/locations';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/locations';
 
   constructor(private http: HttpClient) {}
 

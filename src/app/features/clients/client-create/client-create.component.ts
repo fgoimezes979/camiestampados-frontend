@@ -37,7 +37,7 @@ export class ClientCreateComponent {
   onSubmit() {
     if (this.clientForm.valid) {
       console.log('Datos enviados:', this.clientForm.value); // ← revisa aquí
-      this.http.post('http://localhost:4040/api/parameters/clients', this.clientForm.value)
+      this.http.post('https://inventarios-adso-api.onrender.com/api/parameters/clients', this.clientForm.value)
         .subscribe({
           next: res => {
             console.log('cliente creado:', res);

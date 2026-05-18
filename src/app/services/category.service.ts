@@ -8,7 +8,7 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:4040/api/parameters/categories';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/categories';
 
   constructor(private http: HttpClient) {}
 

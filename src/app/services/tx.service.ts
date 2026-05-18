@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TxService {
-  private apiUrl = 'http://localhost:4040/api/parameters/txs';
+ private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/txs';
 
   constructor(private http: HttpClient) {}
 

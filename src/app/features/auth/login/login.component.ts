@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
     const { email, password } = this.loginForm.value;
 
-    this.http.post<any>('http://localhost:4040/api/security/users/login', { email, password })
+    this.http.post<any>('https://inventarios-adso-api.onrender.com/api/security/users/login', { email, password })
       .subscribe({
 
         next: (res: any) => {

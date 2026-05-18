@@ -18,7 +18,7 @@ export class CategoryListComponent implements OnInit {
     description:''
   };
 
-  apiUrl = 'http://localhost:4040/api/parameters/categories';
+  apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/categories';
 
   constructor(private http:HttpClient){}
 

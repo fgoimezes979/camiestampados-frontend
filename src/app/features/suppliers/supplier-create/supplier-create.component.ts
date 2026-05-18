@@ -54,7 +54,7 @@ onSubmit(): void {
 
   console.log('Payload final a enviar:', payload);
 
-  this.http.post('http://localhost:4040/api/parameters/suppliers', payload, {
+  this.http.post('https://inventarios-adso-api.onrender.com/api/parameters/suppliers', payload, {
     headers: { 'Content-Type': 'application/json' }
   }).subscribe({
     next: (res) => {

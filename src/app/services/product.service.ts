@@ -7,9 +7,9 @@ import { Observable } from 'rxjs';
 })
 export class ProductService {
 
-  private apiUrl = 'http://localhost:4040/api/parameters/products';
-  private supplierUrl = 'http://localhost:4040/api/parameters/suppliers';
-  private locationUrl = 'http://localhost:4040/api/parameters/locations';
+private apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/products';
+private supplierUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/suppliers';
+private locationUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/locations';
 
   constructor(private http: HttpClient) {}
 

@@ -22,7 +22,7 @@ export class OrderCreateComponent implements OnInit {
 
   selectedProducts: any[] = [];
 
-  private readonly apiUrl = 'http://localhost:4040/api/parameters';
+  private readonly apiUrl = 'https://inventarios-adso-api.onrender.com/api/parameters';
 
   // 👇 cliente por defecto (AJUSTA ESTE ID)
   private defaultClientId = 4;

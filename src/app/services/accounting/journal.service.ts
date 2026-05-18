@@ -9,7 +9,7 @@ import { JournalEntry } from '../../models/journal-entry.model';
 })
 export class JournalService {
 
-  private readonly API_URL = 'http://localhost:4040/api/accounting/journals';
+  private readonly API_URL = 'https://inventarios-adso-api.onrender.com/api/accounting/journals';
 
   constructor(private http: HttpClient) {}
 

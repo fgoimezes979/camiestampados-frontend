@@ -51,7 +51,7 @@ export class OperationCreateComponent implements OnInit {
     };
 
     this.http.post(
-      'http://localhost:4040/api/parameters/operations',
+      'https://inventarios-adso-api.onrender.com/api/parameters/operations',
       operationPayload
     ).subscribe({
       next: () => {

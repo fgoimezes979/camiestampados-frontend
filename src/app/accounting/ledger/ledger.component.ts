@@ -40,7 +40,7 @@ export class LedgerComponent implements OnInit {
 
   loadAccounts() {
 
-    this.http.get<any>('http://localhost:4040/api/accounting/journals/accounts')
+    this.http.get<any>('https://inventarios-adso-api.onrender.com/api/accounting/journals/accounts')
       .subscribe({
         next: (res) => {
           this.accounts = res.accounts;
@@ -64,7 +64,7 @@ export class LedgerComponent implements OnInit {
     }
 
     const url =
-      `http://localhost:4040/api/accounting/journals/ledger/${this.accountId}?from=${this.from}&to=${this.to}`;
+      `https://inventarios-adso-api.onrender.com/api/accounting/journals/ledger/${this.accountId}?from=${this.from}&to=${this.to}`;
 
     this.http.get<any>(url)
       .subscribe({

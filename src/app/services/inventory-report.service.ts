@@ -7,15 +7,14 @@ import { Observable } from 'rxjs';
 })
 export class InventoryReportService {
 
-  // 🔐 Reportes
-  private baseUrl = 'http://localhost:4040/api/parameters/reports';
+// 🔐 Reportes
+private baseUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/reports';
 
-  // 📦 Productos
-  private productsUrl = 'http://localhost:4040/api/parameters/products';
+// 📦 Productos
+private productsUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/products';
 
-  // 📍 Ubicaciones
-  private locationsUrl = 'http://localhost:4040/api/parameters/locations';
-
+// 📍 Ubicaciones
+private locationsUrl = 'https://inventarios-adso-api.onrender.com/api/parameters/locations';
   constructor(private http: HttpClient) {}
 
   // ===============================
